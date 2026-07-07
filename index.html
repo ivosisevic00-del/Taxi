@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taxi kalkulator</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:420px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+h2{text-align:center;}
+input{
+    width:100%;
+    padding:12px;
+    font-size:16px;
+    margin-top:10px;
+    box-sizing:border-box;
+}
+button{
+    width:100%;
+    padding:14px;
+    margin-top:15px;
+    font-size:18px;
+    background:#009688;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+button:hover{background:#00796b;}
+#rezultat{
+    margin-top:20px;
+    font-size:18px;
+    line-height:1.8;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>🚖 Izračun cijene vožnje</h2>
+
+<input id="destination" placeholder="Upišite odredište">
+<button onclick="izracunaj()">Izračunaj cijenu</button>
+
+<div id="rezultat"></div>
+</div>
+
+<script>
+const API="PASTE_YOUR_OPENROUTESERVICE_API_KEY_HERE";
+
+async function izracunaj(){
+
+document.getElementById("rezultat").innerHTML="Dohvaćam lokaciju...";
+
+navigator.geolocation.getCurrentPosition(async function(pos){
+
+const startLat=pos.coords.latitude;
+const startLon=pos.coords.longitude;
+
+const adr=document.getElementById("destination").value;
+
+const geo=await fetch(
+`https://api.openrouteservice.org/geocode/search?api_key=${API}&text=${encodeURIComponent(adr)}`
+);
+
+const geoJson=await geo.json();
+
+if(!geoJson.features.length){
+document.getElementById("rezultat").innerHTML="❌ Adresa nije pronađena.";
+return;
+}
+
+const endLon=geoJson.features[0].geometry.coordinates[0];
+const endLat=geoJson.features[0].geometry.coordinates[1];
+
+const route=await fetch(
+"https://api.openrouteservice.org/v2/directions/driving-car",
+{
+method:"POST",
+headers:{
+Authorization:API,
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+coordinates:[
+[startLon,startLat],
+[endLon,endLat]
+]
+})
+}
+);
+
+const routeJson=await route.json();
+
+const km=routeJson.routes[0].summary.distance/1000;
+const min=routeJson.routes[0].summary.duration/60;
+
+const cijena=1.15+(km*0.95)+(min*0.25);
+
+document.getElementById("rezultat").innerHTML=`
+📏 Udaljenost: <b>${km.toFixed(1)} km</b><br>
+⏱ Vrijeme: <b>${min.toFixed(0)} min</b><br><br>
+💶 <span style="font-size:34px;color:green;">
+${cijena.toFixed(2)} €
+</span>`;
+},
+function(){
+document.getElementById("rezultat").innerHTML="❌ Potrebno je dopustiti pristup lokaciji.";
+});
+}
+</script>
+
+</body>
+</html>
