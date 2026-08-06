@@ -36,6 +36,77 @@ Dashboard
 Vozači
 </li>
 
+<section id="vehiclesModule">
+
+    <div class="sectionHeader">
+
+        <h2>Vozila</h2>
+
+        <button id="newVehicleBtn">
+            <i class="fa-solid fa-plus"></i>
+            Novo vozilo
+        </button>
+
+    </div>
+
+    <table class="driversTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Marka</th>
+                <th>Model</th>
+                <th>Godina</th>
+                <th>Registracija</th>
+                <th>Akcije</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="vehiclesBody"></tbody>
+
+    </table>
+
+</section>
+
+<!-- VEHICLE MODAL -->
+
+<div class="modal" id="vehicleModal">
+
+    <div class="modalBox">
+
+        <h2>Novo vozilo</h2>
+
+        <input id="vehicleBrand" placeholder="Marka">
+
+        <input id="vehicleModel" placeholder="Model">
+
+        <input id="vehicleYear" placeholder="Godina">
+
+        <input id="vehiclePlate" placeholder="Registracija">
+
+        <div class="buttons">
+
+            <button id="saveVehicle">
+
+                Spremi
+
+            </button>
+
+            <button id="closeVehicle">
+
+                Odustani
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 <li>
 <i class="fa-solid fa-car"></i>
 Vozila
