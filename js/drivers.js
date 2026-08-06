@@ -14,42 +14,6 @@ function initDrivers() {
     const closeBtn = document.getElementById("closeDriver");
     const search = document.getElementById("searchInput");
 
-    if (newBtn) newBtn.addEventListener("click", openDriverModal);
-    if (saveBtn) saveBtn.addEventListener("click", saveDriver);
-    if (closeBtn) closeBtn.addEventListener("click", () => closeModal("driverModal"));
-
-    if (search) {
-        search.addEventListener("input", e => {
-            searchDrivers(e.target.value);
-        });
-    }
-}
-if(search){
-
-    search.addEventListener("input",()=>{
-
-        const text=search.value.toLowerCase();
-
-        const rows=document.querySelectorAll("#driversBody tr");
-
-        rows.forEach(row=>{
-
-            row.style.display=row.innerText.toLowerCase().includes(text)
-                ? ""
-                : "none";
-
-        });
-
-    });
-
-}{
-
-    renderDrivers();
-
-    const newBtn = document.getElementById("newDriverBtn");
-    const saveBtn = document.getElementById("saveDriver");
-    const closeBtn = document.getElementById("closeDriver");
-
     if (newBtn) {
         newBtn.addEventListener("click", openDriverModal);
     }
@@ -59,7 +23,15 @@ if(search){
     }
 
     if (closeBtn) {
-        closeBtn.addEventListener("click", () => closeModal("driverModal"));
+        closeBtn.addEventListener("click", () => {
+            closeModal("driverModal");
+        });
+    }
+
+    if (search) {
+        search.addEventListener("input", (e) => {
+            searchDrivers(e.target.value);
+        });
     }
 
 }
@@ -82,27 +54,19 @@ function renderDrivers() {
             <td>${driver.phone}</td>
 
             <td>
-
                 <span class="status ${driver.status === "Aktivan" ? "active" : "inactive"}">
-
                     ${driver.status}
-
                 </span>
-
             </td>
 
             <td>
 
                 <button class="editBtn" onclick="editDriver(${index})">
-
                     <i class="fa-solid fa-pen"></i>
-
                 </button>
 
                 <button class="deleteBtn" onclick="deleteDriver(${index})">
-
                     <i class="fa-solid fa-trash"></i>
-
                 </button>
 
             </td>
@@ -210,6 +174,8 @@ function searchDrivers(text) {
 
     const tbody = document.getElementById("driversBody");
 
+    if (!tbody) return;
+
     tbody.innerHTML = "";
 
     DB.drivers
@@ -228,73 +194,34 @@ function searchDrivers(text) {
         })
         .forEach((driver, index) => {
 
-            tbody.innerHTML += `
-                <tr>
+            const row = document.createElement("tr");
 
-                    <td>${driver.name}</td>
+            row.innerHTML = `
+                <td>${driver.name}</td>
+                <td>${driver.surname}</td>
+                <td>${driver.phone}</td>
 
-                    <td>${driver.surname}</td>
+                <td>
+                    <span class="status ${driver.status === "Aktivan" ? "active" : "inactive"}">
+                        ${driver.status}
+                    </span>
+                </td>
 
-                    <td>${driver.phone}</td>
+                <td>
 
-                    <td>
-                        <span class="status ${driver.status === "Aktivan" ? "active" : "inactive"}">
-                            ${driver.status}
-                        </span>
-                    </td>
+                    <button class="editBtn" onclick="editDriver(${index})">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
 
-                    <td>
+                    <button class="deleteBtn" onclick="deleteDriver(${index})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
 
-                        <button class="editBtn"
-                            onclick="editDriver(${index})">
-
-                            <i class="fa-solid fa-pen"></i>
-
-                        </button>
-
-                        <button class="deleteBtn"
-                            onclick="deleteDriver(${index})">
-
-                            <i class="fa-solid fa-trash"></i>
-
-                        </button>
-
-                    </td>
-
-                </tr>
+                </td>
             `;
 
+            tbody.appendChild(row);
+
         });
-
-}
-
-function editDriver(index){
-
-    editingDriver=index;
-
-    const d=DB.drivers[index];
-
-    document.getElementById("driverName").value=d.name;
-    document.getElementById("driverSurname").value=d.surname;
-    document.getElementById("driverPhone").value=d.phone;
-    document.getElementById("driverStatus").value=d.status;
-
-    openModal("driverModal");
-
-}
-
-function deleteDriver(index){
-
-    if(!confirm("Obrisati vozača?")) return;
-
-    DB.drivers.splice(index,1);
-
-    saveStorage();
-
-    renderDrivers();
-
-    updateDashboard();
-
-    toast("Vozač obrisan");
 
 }
