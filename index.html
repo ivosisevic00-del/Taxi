@@ -2,16 +2,257 @@
 <html lang="hr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FleetCore Lite v0.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FleetCore ERP</title>
+
 <link rel="stylesheet" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
 </head>
+
 <body>
-<div class="sidebar"><h2>FleetCore</h2><button>Dashboard</button><button>Vozači</button></div>
-<div class="main">
-<h1>FleetCore Lite v0.1</h1>
-<div class="card">Projekt kostur spreman za nadogradnju.</div>
+
+<div class="sidebar">
+
+<div class="logo">
+<i class="fa-solid fa-truck-fast"></i>
+FleetCore
 </div>
+
+<ul>
+
+<li class="active">
+<i class="fa-solid fa-chart-column"></i>
+Dashboard
+</li>
+
+<li>
+<i class="fa-solid fa-users"></i>
+Vozači
+</li>
+
+<li>
+<i class="fa-solid fa-car"></i>
+Vozila
+</li>
+
+<li>
+<i class="fa-solid fa-wallet"></i>
+Financije
+</li>
+
+<li>
+<i class="fa-solid fa-screwdriver-wrench"></i>
+Servisi
+</li>
+
+<li>
+<i class="fa-solid fa-folder-open"></i>
+Dokumenti
+</li>
+
+<li>
+<i class="fa-solid fa-chart-line"></i>
+Izvještaji
+</li>
+
+<li>
+<i class="fa-solid fa-gear"></i>
+Postavke
+</li>
+
+</ul>
+
+</div>
+
+<div class="content">
+
+<header>
+
+<div class="search">
+
+<input
+type="text"
+placeholder="Pretraži vozače, vozila..."
+>
+
+</div>
+
+<div class="user">
+
+<i class="fa-solid fa-bell"></i>
+
+<img
+src="https://i.pravatar.cc/100"
+>
+
+</div>
+
+</header>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Vozači</h3>
+
+<h1 id="driversCount">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Vozila</h3>
+
+<h1 id="vehiclesCount">0</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Zarada</h3>
+
+<h1>0 €</h1>
+
+</div>
+
+<div class="card">
+
+<h3>Troškovi</h3>
+
+<h1>0 €</h1>
+
+</div>
+
+</div>
+
+<div class="dashboard">
+
+<div class="panel">
+
+<h2>Posljednje aktivnosti</h2>
+
+<ul id="activity">
+
+<li>Dobrodošao u FleetCore ERP</li>
+
+</ul>
+
+</div>
+
+<div class="panel">
+
+<h2>Brze akcije</h2>
+
+<button>Novi vozač</button>
+
+<button>Novo vozilo</button>
+
+<button>Novi servis</button>
+
+</div>
+
+</div>
+
+</div>
+<!-- ===========================
+     MODUL VOZAČI
+============================ -->
+
+<section id="driversModule">
+
+    <div class="sectionHeader">
+
+        <h2>Vozači</h2>
+
+        <button id="newDriverBtn">
+            <i class="fa-solid fa-plus"></i>
+            Novi vozač
+        </button>
+
+    </div>
+
+    <table class="driversTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Telefon</th>
+                <th>Status</th>
+                <th>Akcije</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="driversBody">
+
+        </tbody>
+
+    </table>
+
+</section>
+
+<!-- ===========================
+     MODAL
+============================ -->
+
+<div class="modal" id="driverModal">
+
+    <div class="modalBox">
+
+        <h2>Novi vozač</h2>
+
+        <input
+            id="driverName"
+            placeholder="Ime">
+
+        <input
+            id="driverSurname"
+            placeholder="Prezime">
+
+        <input
+            id="driverPhone"
+            placeholder="Telefon">
+
+        <select id="driverStatus">
+
+            <option>Aktivan</option>
+
+            <option>Neaktivan</option>
+
+        </select>
+
+        <div class="buttons">
+
+            <button id="saveDriver">
+
+                Spremi
+
+            </button>
+
+            <button id="closeDriver">
+
+                Odustani
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
 <script src="js/app.js"></script>
+
 </body>
+
 </html>
