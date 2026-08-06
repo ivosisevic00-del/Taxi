@@ -5,8 +5,25 @@
 
 let editingDriver = -1;
 
-function initDrivers() const search=document.getElementById("searchInput");
+function initDrivers() {
 
+    renderDrivers();
+
+    const newBtn = document.getElementById("newDriverBtn");
+    const saveBtn = document.getElementById("saveDriver");
+    const closeBtn = document.getElementById("closeDriver");
+    const search = document.getElementById("searchInput");
+
+    if (newBtn) newBtn.addEventListener("click", openDriverModal);
+    if (saveBtn) saveBtn.addEventListener("click", saveDriver);
+    if (closeBtn) closeBtn.addEventListener("click", () => closeModal("driverModal"));
+
+    if (search) {
+        search.addEventListener("input", e => {
+            searchDrivers(e.target.value);
+        });
+    }
+}
 if(search){
 
     search.addEventListener("input",()=>{
