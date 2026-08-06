@@ -1,0 +1,5 @@
+body{margin:0;font-family:Arial,sans-serif;display:flex;background:#10141d;color:#fff}
+.sidebar{width:220px;background:#182130;padding:20px;height:100vh}
+.sidebar button{display:block;width:100%;margin:8px 0;padding:10px}
+.main{flex:1;padding:30px}
+.card{background:#1f2b3c;padding:20px;border-radius:10px}
