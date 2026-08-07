@@ -1334,3 +1334,128 @@ body.menu-open{
     overflow:hidden;
 
 }
+
+/* ==========================================
+   DRIVER MODAL FIX
+========================================== */
+
+.driverModal{
+
+    max-width:900px;
+    width:95vw;
+
+    max-height:90vh;
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+.driverModal h2{
+
+    margin-bottom:20px;
+
+}
+
+.driverModal .formGrid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    overflow-y:auto;
+
+    max-height:60vh;
+
+    padding-right:10px;
+
+}
+
+.driverModal .formGrid div{
+
+    display:flex;
+    flex-direction:column;
+
+}
+
+.driverModal label{
+
+    margin-top:0;
+    margin-bottom:6px;
+
+}
+
+.driverModal input,
+.driverModal select{
+
+    height:46px;
+
+}
+
+.driverModal .buttons{
+
+    margin-top:25px;
+
+    padding-top:20px;
+
+    border-top:1px solid #e5e7eb;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+    flex-shrink:0;
+
+}
+
+.driverModal .buttons button{
+
+    min-width:150px;
+
+}
+
+@media(max-width:900px){
+
+    .driverModal{
+
+        width:98vw;
+
+        max-height:95vh;
+
+    }
+
+    .driverModal .formGrid{
+
+        grid-template-columns:1fr;
+
+        max-height:65vh;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .driverModal{
+
+        padding:20px;
+
+    }
+
+    .driverModal .buttons{
+
+        flex-direction:column;
+
+    }
+
+    .driverModal .buttons button{
+
+        width:100%;
+
+    }
+
+}
