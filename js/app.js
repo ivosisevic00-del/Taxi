@@ -41,13 +41,26 @@ function initNavigation() {
 
         button.addEventListener("click", () => {
 
-            buttons.forEach(b => b.classList.remove("active"));
+    buttons.forEach(b => b.classList.remove("active"));
 
-            button.classList.add("active");
+    button.classList.add("active");
 
-            const page = button.textContent.trim();
+    const page = button.textContent.trim();
 
-            showModule(page);
+    showModule(page);
+
+    // Zatvori izbornik na mobitelu
+    if (window.innerWidth < 900) {
+
+        const sidebar = document.querySelector(".sidebar");
+
+        if (sidebar) {
+            sidebar.classList.remove("active");
+        }
+
+    }
+
+});
 
         });
 
@@ -290,5 +303,23 @@ document.addEventListener("keydown", (e) => {
     });
 
 });
+
+//========================================
+// MOBILE MENU
+//========================================
+
+const menuToggle = document.getElementById("menuToggle");
+
+if(menuToggle){
+
+    menuToggle.addEventListener("click",()=>{
+
+        document
+            .querySelector(".sidebar")
+            .classList.toggle("active");
+
+    });
+
+}
 
 
