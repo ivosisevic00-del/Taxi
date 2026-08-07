@@ -162,6 +162,18 @@ if (quickFinance) {
 
 }
 
+const quickFinance = document.getElementById("quickFinance");
+
+if (quickFinance) {
+
+    quickFinance.addEventListener("click", () => {
+
+        openFinanceModal();
+
+    });
+
+}
+
 // =======================================
 // GLOBALNA PRETRAGA
 // =======================================
