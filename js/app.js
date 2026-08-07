@@ -5,27 +5,21 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // Učitaj podatke
     initStorage();
 
-    if (typeof initDashboard === "function")
-        initDashboard();
+    // Pokreni module
+    if (typeof initDashboard === "function") initDashboard();
+    if (typeof initDrivers === "function") initDrivers();
+    if (typeof initVehicles === "function") initVehicles();
+    if (typeof initFinance === "function") initFinance();
 
-    if (typeof initDrivers === "function")
-        initDrivers();
-
-    if (typeof initVehicles === "function")
-        initVehicles();
-
-    if (typeof initFinance === "function")
-        initFinance();
-
+    // Pokreni aplikaciju
     initNavigation();
-
     initQuickActions();
-
     initSearch();
-
-    initModalButtons();
+    initMobileMenu();
+    initModalEvents();
 
 });
 
@@ -41,26 +35,24 @@ function initNavigation() {
 
         button.addEventListener("click", () => {
 
-    buttons.forEach(b => b.classList.remove("active"));
+            buttons.forEach(b => b.classList.remove("active"));
 
-    button.classList.add("active");
+            button.classList.add("active");
 
-    const page = button.textContent.trim();
+            const page = button.textContent.trim();
 
-    showModule(page);
+            showModule(page);
 
-    // Zatvori izbornik na mobitelu
-    if (window.innerWidth < 900) {
+            // Zatvori menu na mobitelu
+            if (window.innerWidth <= 900) {
 
-        const sidebar = document.querySelector(".sidebar");
+                const sidebar = document.querySelector(".sidebar");
 
-        if (sidebar) {
-            sidebar.classList.remove("active");
-        }
+                if (sidebar) {
+                    sidebar.classList.remove("active");
+                }
 
-    }
-
-});
+            }
 
         });
 
@@ -76,7 +68,7 @@ function initNavigation() {
 
 function showModule(page) {
 
-    // Sakrij Dashboard
+    // Sakrij dashboard
     const dashboard = document.querySelector(".dashboard");
 
     if (dashboard) {
@@ -85,19 +77,21 @@ function showModule(page) {
 
     // Sakrij sve module
     const modules = [
+
         "driversModule",
         "vehiclesModule",
         "financeModule",
         "serviceModule",
         "documentsModule"
+
     ];
 
     modules.forEach(id => {
 
-        const el = document.getElementById(id);
+        const module = document.getElementById(id);
 
-        if (el) {
-            el.style.display = "none";
+        if (module) {
+            module.style.display = "none";
         }
 
     });
@@ -113,60 +107,41 @@ function showModule(page) {
 
             break;
 
-        case "Vozači": {
+        case "Vozači":
 
-            const el = document.getElementById("driversModule");
-
-            if (el) {
-                el.style.display = "block";
-            }
+            document.getElementById("driversModule")?.style.setProperty("display", "block");
 
             break;
-        }
 
-        case "Vozila": {
+        case "Vozila":
 
-            const el = document.getElementById("vehiclesModule");
-
-            if (el) {
-                el.style.display = "block";
-            }
+            document.getElementById("vehiclesModule")?.style.setProperty("display", "block");
 
             break;
-        }
 
-        case "Financije": {
+        case "Financije":
 
-            const el = document.getElementById("financeModule");
-
-            if (el) {
-                el.style.display = "block";
-            }
+            document.getElementById("financeModule")?.style.setProperty("display", "block");
 
             break;
-        }
 
-        case "Servisi": {
+        case "Servisi":
 
-            const el = document.getElementById("serviceModule");
-
-            if (el) {
-                el.style.display = "block";
-            }
+            document.getElementById("serviceModule")?.style.setProperty("display", "block");
 
             break;
-        }
 
-        case "Dokumenti": {
+        case "Dokumenti":
 
-            const el = document.getElementById("documentsModule");
-
-            if (el) {
-                el.style.display = "block";
-            }
+            document.getElementById("documentsModule")?.style.setProperty("display", "block");
 
             break;
-        }
+
+        default:
+
+            if (dashboard) {
+                dashboard.style.display = "grid";
+            }
 
     }
 
@@ -181,31 +156,25 @@ function initQuickActions() {
     const quickDriver = document.getElementById("quickDriver");
 
     if (quickDriver) {
-        quickDriver.addEventListener("click", () => {
-            openDriverModal();
-        });
+        quickDriver.onclick = () => openDriverModal();
     }
 
     const quickVehicle = document.getElementById("quickVehicle");
 
     if (quickVehicle) {
-        quickVehicle.addEventListener("click", () => {
-            openVehicleModal();
-        });
+        quickVehicle.onclick = () => openVehicleModal();
     }
 
     const quickFinance = document.getElementById("quickFinance");
 
     if (quickFinance) {
-        quickFinance.addEventListener("click", () => {
-            openFinanceModal();
-        });
+        quickFinance.onclick = () => openFinanceModal();
     }
 
 }
 
 // =======================================
-// GLOBALNA PRETRAGA
+// PRETRAGA
 // =======================================
 
 function initSearch() {
@@ -216,16 +185,37 @@ function initSearch() {
 
     input.addEventListener("input", function () {
 
-        const text = this.value.toLowerCase();
+        const value = this.value.toLowerCase();
 
         if (typeof searchDrivers === "function") {
-            searchDrivers(text);
+            searchDrivers(value);
         }
 
         if (typeof searchVehicles === "function") {
-            searchVehicles(text);
+            searchVehicles(value);
         }
 
+    });
+
+}
+
+// =======================================
+// MOBILE MENU
+// =======================================
+
+function initMobileMenu() {
+
+    const button = document.getElementById("menuToggle");
+
+    const sidebar = document.querySelector(".sidebar");
+
+    if (!button || !sidebar) return;
+
+    button.addEventListener("click", () => {
+
+sidebar.classList.toggle("active");
+
+document.body.classList.toggle("menu-open");
     });
 
 }
@@ -255,44 +245,61 @@ function closeModal(id) {
 }
 
 // =======================================
-// OTVARANJE MODALA
+// MODAL DOGAĐAJI
 // =======================================
 
-function openDriverModal() {
+function initModalEvents() {
 
-    if (typeof editingDriver !== "undefined") {
-        editingDriver = -1;
+    // Driver
+    const closeDriver = document.getElementById("closeDriver");
+
+    if (closeDriver) {
+        closeDriver.onclick = () => closeModal("driverModal");
     }
 
-    const name = document.getElementById("driverName");
-    const surname = document.getElementById("driverSurname");
-    const phone = document.getElementById("driverPhone");
-    const status = document.getElementById("driverStatus");
+    // Vehicle
+    const closeVehicle = document.getElementById("closeVehicle");
 
-    if (name) name.value = "";
-    if (surname) surname.value = "";
-    if (phone) phone.value = "";
-    if (status) status.value = "Aktivan";
+    if (closeVehicle) {
+        closeVehicle.onclick = () => closeModal("vehicleModal");
+    }
 
-    openModal("driverModal");
+    // Finance
+    const closeFinance = document.getElementById("closeFinance");
+
+    if (closeFinance) {
+        closeFinance.onclick = () => closeModal("financeModal");
+    }
+
+    // Gumb "Novi zapis" u Financijama
+    const newFinance = document.getElementById("newFinanceBtn");
+
+    if (newFinance) {
+        newFinance.onclick = () => openFinanceModal();
+    }
+
+    // Klik izvan modala zatvara modal
+    document.querySelectorAll(".modal").forEach(modal => {
+
+        modal.addEventListener("click", e => {
+
+            if (e.target === modal) {
+
+                modal.classList.remove("active");
+
+            }
+
+        });
+
+    });
 
 }
 
-function openVehicleModal() {
-
-    if (typeof editingVehicle !== "undefined") {
-        editingVehicle = -1;
-    }
-
-    openModal("vehicleModal");
-
-}
-
 // =======================================
-// ESC ZATVARA MODALE
+// ESC zatvara sve modale
 // =======================================
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", e => {
 
     if (e.key !== "Escape") return;
 
@@ -303,23 +310,4 @@ document.addEventListener("keydown", (e) => {
     });
 
 });
-
-//========================================
-// MOBILE MENU
-//========================================
-
-const menuToggle = document.getElementById("menuToggle");
-
-if(menuToggle){
-
-    menuToggle.addEventListener("click",()=>{
-
-        document
-            .querySelector(".sidebar")
-            .classList.toggle("active");
-
-    });
-
-}
-
 
