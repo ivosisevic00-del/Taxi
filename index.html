@@ -3,28 +3,20 @@
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<title>ZdraviRazum ERP</title>
 
-    <title>ZdraviRazum ERP</title>
+<link rel="stylesheet" href="css/style.css">
 
-    <link rel="stylesheet"
-          href="css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet">
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -32,320 +24,300 @@
 
 <div class="app">
 
-    <!-- ===========================
-         SIDEBAR
-    ============================ -->
+<!-- =====================================
+     SIDEBAR
+====================================== -->
 
-    <aside class="sidebar">
+<aside class="sidebar">
 
-        <div class="logo">
+    <div class="logo">
 
-            <i class="fa-solid fa-truck-fast"></i>
+        <i class="fa-solid fa-truck-fast"></i>
 
-            <span>Zdravi Razum</span>
+        <span>Zdravi Razum</span>
+
+    </div>
+
+    <nav class="menu">
+
+        <button class="menu-item active">
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Dashboard</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-users"></i>
+            <span>Vozači</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-car"></i>
+            <span>Vozila</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-wallet"></i>
+            <span>Financije</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <span>Servisi</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-folder-open"></i>
+            <span>Dokumenti</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Izvještaji</span>
+        </button>
+
+        <button class="menu-item">
+            <i class="fa-solid fa-gear"></i>
+            <span>Postavke</span>
+        </button>
+
+    </nav>
+
+</aside>
+
+<!-- =====================================
+     SADRŽAJ
+====================================== -->
+
+<main class="content">
+
+<header class="topbar">
+
+    <div class="search">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Pretraži vozače, vozila, registracije...">
+
+    </div>
+
+    <div class="topbar-right">
+
+        <button class="icon-btn">
+            <i class="fa-solid fa-bell"></i>
+        </button>
+
+        <button class="icon-btn">
+            <i class="fa-solid fa-envelope"></i>
+        </button>
+
+        <div class="profile">
+
+            <img src="https://i.pravatar.cc/100?img=12">
+
+            <div>
+
+                <strong>Administrator</strong>
+
+                <small>Fleet Manager</small>
+
+            </div>
 
         </div>
 
-        <nav class="menu">
+    </div>
 
-            <button class="menu-item active">
+</header>
 
-                <i class="fa-solid fa-chart-column"></i>
+<!-- =====================================
+     KPI
+====================================== -->
 
-                <span>Dashboard</span>
+<section class="cards">
 
-            </button>
+<div class="card">
+<span>Vozači</span>
+<h2 id="driversCount">0</h2>
+</div>
 
-            <button class="menu-item">
+<div class="card">
+<span>Vozila</span>
+<h2 id="vehiclesCount">0</h2>
+</div>
 
-                <i class="fa-solid fa-users"></i>
+<div class="card">
+<span>Zarada</span>
+<h2 id="incomeTotal">0 €</h2>
+</div>
 
-                <span>Vozači</span>
+<div class="card">
+<span>Troškovi</span>
+<h2 id="expenseTotal">0 €</h2>
+</div>
 
-            </button>
+</section>
 
-            <button class="menu-item">
+<!-- =====================================
+DASHBOARD
+====================================== -->
 
-                <i class="fa-solid fa-car"></i>
+<section class="dashboard">
 
-                <span>Vozila</span>
+<div class="panel">
 
-            </button>
+<h2>Posljednje aktivnosti</h2>
 
-            <button class="menu-item">
+<ul id="activityList">
 
-                <i class="fa-solid fa-wallet"></i>
+<li>Dobrodošao u Zdravi Razum ERP.</li>
 
-                <span>Financije</span>
+</ul>
 
-            </button>
+</div>
 
-            <button class="menu-item">
+<div class="panel">
 
-                <i class="fa-solid fa-screwdriver-wrench"></i>
+<h2>Brze akcije</h2>
 
-                <span>Servisi</span>
+<div class="quickActions">
 
-            </button>
+<button id="quickDriver" class="primaryBtn">
+<i class="fa-solid fa-user-plus"></i>
+Novi vozač
+</button>
 
-            <button class="menu-item">
+<button id="quickVehicle" class="primaryBtn">
+<i class="fa-solid fa-car"></i>
+Novo vozilo
+</button>
 
-                <i class="fa-solid fa-folder-open"></i>
+<button id="quickFinance" class="primaryBtn">
+<i class="fa-solid fa-wallet"></i>
+Nova financija
+</button>
 
-                <span>Dokumenti</span>
+<button id="quickService" class="primaryBtn">
+<i class="fa-solid fa-screwdriver-wrench"></i>
+Novi servis
+</button>
 
-            </button>
+</div>
 
-            <button class="menu-item">
+</div>
 
-                <i class="fa-solid fa-chart-line"></i>
+</section>
 
-                <span>Izvještaji</span>
+<!-- =====================================
+VOZAČI
+====================================== -->
 
-            </button>
+<section id="driversModule" style="display:none;">
 
-            <button class="menu-item">
+<div class="sectionHeader">
 
-                <i class="fa-solid fa-gear"></i>
+<h2>
 
-                <span>Postavke</span>
+<i class="fa-solid fa-users"></i>
 
-            </button>
+Vozači
 
-        </nav>
+</h2>
 
-    </aside>
+<button
+id="newDriverBtn"
+class="primaryBtn">
 
-    <!-- ===========================
-         CONTENT
-    ============================ -->
+<i class="fa-solid fa-plus"></i>
 
-    <main class="content">
+Novi vozač
 
-        <!-- HEADER -->
+</button>
 
-        <header class="topbar">
+</div>
 
-            <div class="search">
+<table class="driversTable">
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+<thead>
 
-                <input
-                    id="searchInput"
-                    type="text"
-                    placeholder="Pretraži vozače, vozila, registracije...">
+<tr>
 
-            </div>
+<th>Ime</th>
+<th>Prezime</th>
+<th>Telefon</th>
+<th>Status</th>
+<th>Akcije</th>
 
-            <div class="topbar-right">
+</tr>
 
-                <button class="icon-btn">
+</thead>
 
-                    <i class="fa-solid fa-bell"></i>
+<tbody id="driversBody">
 
-                </button>
+</tbody>
 
-                <button class="icon-btn">
+</table>
 
-                    <i class="fa-solid fa-envelope"></i>
+</section>
 
-                </button>
+<!-- =====================================
+VOZILA
+====================================== -->
 
-                <div class="profile">
+<section id="vehiclesModule" style="display:none;">
 
-                    <img
-                        src="https://i.pravatar.cc/100?img=12"
-                        alt="Profil">
+    <div class="sectionHeader">
 
-                    <div>
+        <h2>
 
-                        <strong>Administrator</strong>
+            <i class="fa-solid fa-car"></i>
 
-                        <small>Fleet Manager</small>
+            Vozila
 
-                    </div>
+        </h2>
 
-                </div>
+        <button
+            id="newVehicleBtn"
+            class="primaryBtn">
 
-            </div>
+            <i class="fa-solid fa-plus"></i>
 
-        </header>
-
-        <!-- KPI KARTICE -->
-
-        <section class="cards">
-
-            <div class="card">
-
-                <span>Vozači</span>
-
-                <h2 id="driversCount">0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <span>Vozila</span>
-
-                <h2 id="vehiclesCount">0</h2>
-
-            </div>
-
-            <div class="card">
-
-                <span>Zarada</span>
-
-                <h2 id="incomeTotal">0 €</h2>
-
-            </div>
-
-            <div class="card">
-
-                <span>Troškovi</span>
-
-                <h2 id="expenseTotal">0 €</h2>
-
-            </div>
-
-        </section>
-
-        <!-- DASHBOARD -->
-
-        <section class="dashboard">
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h2>Posljednje aktivnosti</h2>
-
-                </div>
-
-                <ul id="activity">
-
-                    <li>Dobrodošao u Zdravi Razum ERP.</li>
-
-                </ul>
-
-            </div>
-
-            <div class="panel">
-
-    <h2>Brze akcije</h2>
-
-    <div class="quickActions">
-
-        <button id="quickDriver" class="primaryBtn">
-            Novi vozač
-        </button>
-
-        <button id="quickVehicle" class="primaryBtn">
             Novo vozilo
-        </button>
 
-        <button id="quickFinance" class="primaryBtn">
-            Nova financija
-        </button>
-
-        <button id="quickService" class="primaryBtn">
-            Novi servis
         </button>
 
     </div>
 
-</div>
+    <table class="driversTable">
 
-            <table class="driversTable">
+        <thead>
 
-                <thead>
+            <tr>
 
-                    <tr>
+                <th>Marka</th>
+                <th>Model</th>
+                <th>Godina</th>
+                <th>Registracija</th>
+                <th>Akcije</th>
 
-                        <th>Ime</th>
+            </tr>
 
-                        <th>Prezime</th>
+        </thead>
 
-                        <th>Telefon</th>
+        <tbody id="vehiclesBody">
 
-                        <th>Status</th>
+        </tbody>
 
-                        <th>Akcije</th>
+    </table>
 
-                    </tr>
+</section>
 
-                </thead>
+<!-- =====================================
+FINANCIJE
+====================================== -->
 
-                <tbody id="driversBody">
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <!-- ===========================
-             MODUL VOZILA
-        ============================ -->
-
-        <section id="vehiclesModule">
-
-            <div class="sectionHeader">
-
-                <h2>
-
-                    <i class="fa-solid fa-car"></i>
-
-                    Vozila
-
-                </h2>
-
-                <button
-                    id="newVehicleBtn"
-                    class="primaryBtn">
-
-                    <i class="fa-solid fa-plus"></i>
-
-                    Novo vozilo
-
-                </button>
-
-            </div>
-
-            <table class="driversTable">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Marka</th>
-
-                        <th>Model</th>
-
-                        <th>Godina</th>
-
-                        <th>Registracija</th>
-
-                        <th>Akcije</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="vehiclesBody">
-
-                </tbody>
-
-            </table>
-
-        </section>
-
-        <!-- ===========================
-             FINANCIJE
-        ============================ -->
-
-      
-
-<section id="financeModule">
+<section id="financeModule" style="display:none;">
 
     <div class="sectionHeader">
 
@@ -376,15 +348,10 @@
             <tr>
 
                 <th>Vozač</th>
-
                 <th>Platforma</th>
-
                 <th>Prihod</th>
-
                 <th>Trošak</th>
-
                 <th>Profit</th>
-
                 <th>Akcije</th>
 
             </tr>
@@ -399,220 +366,183 @@
 
 </section>
 
-        <!-- ===========================
-             SERVISI
-        ============================ -->
-
-        <section id="serviceModule">
-
-            <div class="sectionHeader">
-
-                <h2>
-
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-
-                    Servisi
-
-                </h2>
-
-            </div>
-
-            <div class="panel">
-
-                <ul id="serviceList">
-
-                    <li>Nema evidentiranih servisa.</li>
-
-                </ul>
-
-            </div>
-
-        </section>
-
-        <!-- ===========================
-             DOKUMENTI
-        ============================ -->
-
-        <section id="documentsModule">
-
-            <div class="sectionHeader">
-
-                <h2>
-
-                    <i class="fa-solid fa-folder-open"></i>
-
-                    Dokumenti
-
-                </h2>
-
-            </div>
-
-            <table class="driversTable">
-
-                <thead>
-
-                    <tr>
-
-                        <th>Naziv</th>
-
-                        <th>Vrsta</th>
-
-                        <th>Istek</th>
-
-                        <th>Status</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="documentsBody">
-
-                    <tr>
-
-                        <td colspan="4">
-
-                            Nema dokumenata.
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </section>
-        <!-- ===========================
-             MODAL VOZAČ
-        ============================ -->
-
-        <div class="modal" id="driverModal">
-
-            <div class="modalBox">
-
-                <h2>Novi vozač</h2>
-
-                <input
-                    id="driverName"
-                    type="text"
-                    placeholder="Ime">
-
-                <input
-                    id="driverSurname"
-                    type="text"
-                    placeholder="Prezime">
-
-                <input
-                    id="driverPhone"
-                    type="text"
-                    placeholder="Telefon">
-
-                <select id="driverStatus">
-
-                    <option value="Aktivan">Aktivan</option>
-
-                    <option value="Neaktivan">Neaktivan</option>
-
-                </select>
-
-                <div class="buttons">
-
-                    <button
-                        id="saveDriver"
-                        class="primaryBtn">
-
-                        Spremi
-
-                    </button>
-
-                    <button
-                        id="closeDriver"
-                        class="secondaryBtn">
-
-                        Odustani
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ===========================
-             MODAL VOZILO
-        ============================ -->
-
-        <div class="modal" id="vehicleModal">
-
-            <div class="modalBox">
-
-                <h2>Novo vozilo</h2>
-
-                <input
-                    id="vehicleBrand"
-                    type="text"
-                    placeholder="Marka">
-
-                <input
-                    id="vehicleModel"
-                    type="text"
-                    placeholder="Model">
-
-                <input
-                    id="vehicleYear"
-                    type="number"
-                    placeholder="Godina">
-
-                <input
-                    id="vehiclePlate"
-                    type="text"
-                    placeholder="Registracija">
-
-                <div class="buttons">
-
-                    <button
-                        id="saveVehicle"
-                        class="primaryBtn">
-
-                        Spremi
-
-                    </button>
-
-                    <button
-                        id="closeVehicle"
-                        class="secondaryBtn">
-
-                        Odustani
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- ===========================
-             TOAST
-        ============================ -->
-
-        <div id="toast"></div>
 <!-- =====================================
-     MODAL FINANCIJE
+SERVISI
 ====================================== -->
 
-<div class="modal" id="financeModal">
+<section id="serviceModule" style="display:none;">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+
+            Servisi
+
+        </h2>
+
+    </div>
+
+    <div class="panel">
+
+        <p>Nema evidentiranih servisa.</p>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+DOKUMENTI
+====================================== -->
+
+<section id="documentsModule" style="display:none;">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            <i class="fa-solid fa-folder-open"></i>
+
+            Dokumenti
+
+        </h2>
+
+    </div>
+
+    <div class="panel">
+
+        <p>Nema učitanih dokumenata.</p>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+MODAL - VOZAČ
+====================================== -->
+
+<div id="driverModal" class="modal">
+
+    <div class="modalBox">
+
+        <h2>Novi vozač</h2>
+
+        <input
+            id="driverName"
+            type="text"
+            placeholder="Ime">
+
+        <input
+            id="driverSurname"
+            type="text"
+            placeholder="Prezime">
+
+        <input
+            id="driverPhone"
+            type="text"
+            placeholder="Telefon">
+
+        <select id="driverStatus">
+
+            <option>Aktivan</option>
+            <option>Neaktivan</option>
+
+        </select>
+
+        <div class="buttons">
+
+            <button
+                id="saveDriver"
+                class="primaryBtn">
+
+                Spremi
+
+            </button>
+
+            <button
+                id="closeDriver"
+                class="secondaryBtn">
+
+                Odustani
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+MODAL - VOZILO
+====================================== -->
+
+<div id="vehicleModal" class="modal">
+
+    <div class="modalBox">
+
+        <h2>Novo vozilo</h2>
+
+        <input
+            id="vehicleBrand"
+            type="text"
+            placeholder="Marka">
+
+        <input
+            id="vehicleModel"
+            type="text"
+            placeholder="Model">
+
+        <input
+            id="vehicleYear"
+            type="number"
+            placeholder="Godina">
+
+        <input
+            id="vehiclePlate"
+            type="text"
+            placeholder="Registracija">
+
+        <div class="buttons">
+
+            <button
+                id="saveVehicle"
+                class="primaryBtn">
+
+                Spremi
+
+            </button>
+
+            <button
+                id="closeVehicle"
+                class="secondaryBtn">
+
+                Odustani
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+MODAL - FINANCIJE
+====================================== -->
+
+<div id="financeModal" class="modal">
 
     <div class="modalBox">
 
         <h2>Novi financijski zapis</h2>
 
-       <select id="financeDriver">
+        <select id="financeDriver">
 
-    <option value="">Odaberi vozača...</option>
+            <option value="">Odaberi vozača...</option>
 
-</select>
+        </select>
 
         <select id="financePlatform">
 
@@ -663,10 +593,33 @@
 
 </div>
 
-<!-- ===========================
-     JAVASCRIPT
-============================ -->
+<!-- =====================================
+FOOTER
+====================================== -->
 
+<footer class="footer">
+
+    <span>
+
+        Zdravi Razum ERP v1.0 © 2026
+
+    </span>
+
+</footer>
+
+</main>
+
+</div>
+
+<!-- =====================================
+TOAST
+====================================== -->
+
+<div id="toast" class="toast"></div>
+
+<!-- =====================================
+JAVASCRIPT
+====================================== -->
 
 <script src="js/storage.js"></script>
 
@@ -677,8 +630,6 @@
 <script src="js/vehicles.js"></script>
 
 <script src="js/finance.js"></script>
-
-<script src="js/ui.js"></script>
 
 <script src="js/app.js"></script>
 
