@@ -1336,95 +1336,97 @@ body.menu-open{
 }
 
 /* ==========================================
-   DRIVER MODAL FIX
+   ANDROID MODAL FIX
 ========================================== */
+
+.modal{
+
+    position:fixed;
+    inset:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:10px;
+
+    overflow-y:auto;
+
+    z-index:99999;
+
+}
 
 .driverModal{
 
-    max-width:900px;
-    width:95vw;
+    width:min(900px,100%);
+    max-height:calc(100dvh - 20px);
 
-    max-height:90vh;
+    background:#fff;
 
     display:flex;
     flex-direction:column;
 
-}
+    overflow:hidden;
 
-.driverModal h2{
-
-    margin-bottom:20px;
+    border-radius:20px;
 
 }
 
 .driverModal .formGrid{
 
+    flex:1;
+
+    overflow-y:auto;
+
     display:grid;
 
     grid-template-columns:repeat(2,1fr);
 
-    gap:18px;
+    gap:15px;
 
-    overflow-y:auto;
-
-    max-height:60vh;
-
-    padding-right:10px;
-
-}
-
-.driverModal .formGrid div{
-
-    display:flex;
-    flex-direction:column;
-
-}
-
-.driverModal label{
-
-    margin-top:0;
-    margin-bottom:6px;
-
-}
-
-.driverModal input,
-.driverModal select{
-
-    height:46px;
+    padding-right:8px;
 
 }
 
 .driverModal .buttons{
 
-    margin-top:25px;
-
-    padding-top:20px;
-
-    border-top:1px solid #e5e7eb;
-
     display:flex;
+
+    gap:10px;
 
     justify-content:flex-end;
 
-    gap:15px;
+    padding-top:15px;
 
-    flex-shrink:0;
+    border-top:1px solid #eee;
+
+    background:#fff;
+
+    position:sticky;
+
+    bottom:0;
 
 }
 
-.driverModal .buttons button{
+@media (max-width:768px){
 
-    min-width:150px;
+    .modal{
 
-}
+        padding:0;
 
-@media(max-width:900px){
+        align-items:flex-start;
+
+    }
 
     .driverModal{
 
-        width:98vw;
+        width:100%;
 
-        max-height:95vh;
+        height:100dvh;
+
+        max-height:100dvh;
+
+        border-radius:0;
 
     }
 
@@ -1432,17 +1434,7 @@ body.menu-open{
 
         grid-template-columns:1fr;
 
-        max-height:65vh;
-
-    }
-
-}
-
-@media(max-width:600px){
-
-    .driverModal{
-
-        padding:20px;
+        padding-bottom:20px;
 
     }
 
