@@ -159,3 +159,61 @@ function showModule(page) {
 
 }
 
+// =======================================
+// BRZE AKCIJE
+// =======================================
+
+function initQuickActions() {
+
+    const quickDriver = document.getElementById("quickDriver");
+
+    if (quickDriver) {
+        quickDriver.addEventListener("click", () => {
+            openDriverModal();
+        });
+    }
+
+    const quickVehicle = document.getElementById("quickVehicle");
+
+    if (quickVehicle) {
+        quickVehicle.addEventListener("click", () => {
+            openVehicleModal();
+        });
+    }
+
+    const quickFinance = document.getElementById("quickFinance");
+
+    if (quickFinance) {
+        quickFinance.addEventListener("click", () => {
+            openFinanceModal();
+        });
+    }
+
+}
+
+// =======================================
+// GLOBALNA PRETRAGA
+// =======================================
+
+function initSearch() {
+
+    const input = document.getElementById("searchInput");
+
+    if (!input) return;
+
+    input.addEventListener("input", function () {
+
+        const text = this.value.toLowerCase();
+
+        if (typeof searchDrivers === "function") {
+            searchDrivers(text);
+        }
+
+        if (typeof searchVehicles === "function") {
+            searchVehicles(text);
+        }
+
+    });
+
+}
+
