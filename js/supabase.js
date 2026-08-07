@@ -6,5 +6,3 @@ window.db = window.supabase.createClient(
     SUPABASE_KEY
 );
 
-console.log("Supabase client:", supabase);
-console.log("window.supabase:", window.supabase);
