@@ -30,6 +30,8 @@ function renderFinance(){
     if(!tbody) return;
 
     tbody.innerHTML="";
+console.log("DB =", DB);
+console.log("DB.finance =", DB.finance);
 
     DB.finance.forEach((item,index)=>{
 
