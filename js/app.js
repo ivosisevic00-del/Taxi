@@ -1,5 +1,5 @@
 // ===============================================
-// ZDRAVI RAZUM ERP v2
+// ZDRAVI RAZUM ERP
 // app.js
 // ===============================================
 
@@ -7,32 +7,43 @@ document.addEventListener("DOMContentLoaded", initApp);
 
 async function initApp() {
 
-    console.log("Pokrećem ERP...");
+    console.log("Pokretanje ERP-a...");
 
-    // učitaj podatke iz Supabase
-    await initStorage();
+    try {
 
-    // inicijalizacija modula
-    if (typeof initDashboard === "function") initDashboard();
+        await initStorage();
 
-    if (typeof initDrivers === "function") initDrivers();
+        if (typeof initDashboard === "function")
+            initDashboard();
 
-    if (typeof initVehicles === "function") initVehicles();
+        if (typeof initDrivers === "function")
+            initDrivers();
 
-    if (typeof initFinance === "function") initFinance();
+        if (typeof initVehicles === "function")
+            initVehicles();
 
-    // UI
-    initNavigation();
+        if (typeof initFinance === "function")
+            initFinance();
 
-    initQuickActions();
+        initNavigation();
 
-    initSearch();
+        initSearch();
 
-    initMobileMenu();
+        initQuickActions();
+
+        initMobileMenu();
+
+        console.log("ERP spreman.");
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+    }
 
 }
-
-
 
 // ===============================================
 // NAVIGACIJA
@@ -46,7 +57,7 @@ function initNavigation() {
 
         button.addEventListener("click", () => {
 
-            buttons.forEach(btn => btn.classList.remove("active"));
+            buttons.forEach(b => b.classList.remove("active"));
 
             button.classList.add("active");
 
@@ -62,29 +73,19 @@ function initNavigation() {
 
 }
 
-
-
 function showPage(page) {
 
-    document.querySelectorAll(".page").forEach(page => {
+    document.querySelectorAll(".page").forEach(section => {
 
-        page.style.display = "none";
+        section.style.display = "none";
 
     });
 
-    const module = document.getElementById(page + "Module");
+    const current = document.getElementById(page + "Module");
 
-    if (module) {
+    if (current) {
 
-        module.style.display = "block";
-
-    }
-
-    if (window.innerWidth <= 768) {
-
-        document
-            .querySelector(".sidebar")
-            ?.classList.remove("active");
+        current.style.display = "block";
 
     }
 
@@ -96,12 +97,12 @@ function showPage(page) {
 
 function initMobileMenu() {
 
-    const menuButton = document.getElementById("menuToggle");
+    const menu = document.getElementById("menuToggle");
     const sidebar = document.querySelector(".sidebar");
 
-    if (!menuButton || !sidebar) return;
+    if (!menu || !sidebar) return;
 
-    menuButton.addEventListener("click", (e) => {
+    menu.addEventListener("click", (e) => {
 
         e.stopPropagation();
 
@@ -115,7 +116,7 @@ function initMobileMenu() {
 
         if (
             !sidebar.contains(e.target) &&
-            !menuButton.contains(e.target)
+            !menu.contains(e.target)
         ) {
 
             sidebar.classList.remove("active");
@@ -126,44 +127,43 @@ function initMobileMenu() {
 
 }
 
-
-
 // ===============================================
-// BRZE AKCIJE
+// QUICK ACTIONS
 // ===============================================
 
 function initQuickActions() {
 
     document
         .getElementById("quickDriver")
-        ?.addEventListener("click", openDriverModal);
+        ?.addEventListener("click", () => {
+
+            if (typeof openDriverModal === "function")
+                openDriverModal();
+
+        });
 
     document
         .getElementById("quickVehicle")
-        ?.addEventListener("click", openVehicleModal);
+        ?.addEventListener("click", () => {
+
+            if (typeof openVehicleModal === "function")
+                openVehicleModal();
+
+        });
 
     document
         .getElementById("quickFinance")
-        ?.addEventListener("click", openFinanceModal);
+        ?.addEventListener("click", () => {
 
-    document
-        .getElementById("newDriverBtn")
-        ?.addEventListener("click", openDriverModal);
+            if (typeof openFinanceModal === "function")
+                openFinanceModal();
 
-    document
-        .getElementById("newVehicleBtn")
-        ?.addEventListener("click", openVehicleModal);
-
-    document
-        .getElementById("newFinanceBtn")
-        ?.addEventListener("click", openFinanceModal);
+        });
 
 }
 
-
-
 // ===============================================
-// PRETRAGA
+// SEARCH
 // ===============================================
 
 function initSearch() {
@@ -174,23 +174,33 @@ function initSearch() {
 
     input.addEventListener("input", () => {
 
-        const value = input.value.toLowerCase();
+        const text = input.value.toLowerCase();
 
-        if (typeof searchDrivers === "function") {
+        if (typeof searchDrivers === "function")
+            searchDrivers(text);
 
-            searchDrivers(value);
-
-        }
-
-        if (typeof searchVehicles === "function") {
-
-            searchVehicles(value);
-
-        }
+        if (typeof searchVehicles === "function")
+            searchVehicles(text);
 
     });
 
 }
+
+// ===============================================
+// WINDOW RESIZE
+// ===============================================
+
+window.addEventListener("resize", () => {
+
+    if (window.innerWidth > 768) {
+
+        document
+            .querySelector(".sidebar")
+            ?.classList.remove("active");
+
+    }
+
+});
 
 // ===============================================
 // MODALI
@@ -211,16 +221,14 @@ function closeAllModals() {
 
 
 // ===============================================
-// ESC ZATVARA MODALE
+// ESC
 // ===============================================
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", e => {
 
-    if (e.key === "Escape") {
+    if (e.key !== "Escape") return;
 
-        closeAllModals();
-
-    }
+    closeAllModals();
 
 });
 
@@ -230,7 +238,7 @@ document.addEventListener("keydown", (e) => {
 // KLIK IZVAN MODALA
 // ===============================================
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", e => {
 
     if (!e.target.classList.contains("modal")) return;
 
@@ -241,52 +249,12 @@ document.addEventListener("click", (e) => {
 
 
 // ===============================================
-// RESIZE
+// REFRESH
 // ===============================================
 
-window.addEventListener("resize", () => {
+async function refreshApp() {
 
-    if (window.innerWidth > 768) {
-
-        document
-            .querySelector(".sidebar")
-            ?.classList.remove("active");
-
-    }
-
-});
-
-
-
-// ===============================================
-// DASHBOARD
-// ===============================================
-
-function refreshApp() {
-
-    if (typeof renderDrivers === "function") {
-
-        renderDrivers();
-
-    }
-
-    if (typeof renderVehicles === "function") {
-
-        renderVehicles();
-
-    }
-
-    if (typeof renderFinance === "function") {
-
-        renderFinance();
-
-    }
-
-    if (typeof updateDashboard === "function") {
-
-        updateDashboard();
-
-    }
+    await refreshData();
 
 }
 
@@ -297,4 +265,3 @@ function refreshApp() {
 // ===============================================
 
 console.log("✅ app.js učitan");
-

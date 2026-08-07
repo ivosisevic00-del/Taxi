@@ -1,40 +1,39 @@
-// ================================
-// FleetCore ERP
-// drivers.js
-// ================================
+// ===============================================
+// ZDRAVI RAZUM ERP
+// DRIVERS
+// ===============================================
 
-let editingDriver = -1;
+let editingDriver = null;
+
+// ===============================================
+// INIT
+// ===============================================
 
 function initDrivers() {
 
     renderDrivers();
 
-    const newBtn = document.getElementById("newDriverBtn");
-    const saveBtn = document.getElementById("saveDriver");
-    const closeBtn = document.getElementById("closeDriver");
-    const search = document.getElementById("searchInput");
+    document
+        .getElementById("newDriverBtn")
+        ?.addEventListener("click", openDriverModal);
 
-    if (newBtn) {
-        newBtn.addEventListener("click", openDriverModal);
-    }
+    document
+        .getElementById("saveDriver")
+        ?.addEventListener("click", saveDriver);
 
-    if (saveBtn) {
-        saveBtn.addEventListener("click", saveDriver);
-    }
+    document
+        .getElementById("closeDriver")
+        ?.addEventListener("click", () => {
 
-    if (closeBtn) {
-        closeBtn.addEventListener("click", () => {
             closeModal("driverModal");
-        });
-    }
 
-    if (search) {
-        search.addEventListener("input", (e) => {
-            searchDrivers(e.target.value);
         });
-    }
 
 }
+
+// ===============================================
+// TABLICA
+// ===============================================
 
 function renderDrivers() {
 
@@ -44,161 +43,207 @@ function renderDrivers() {
 
     tbody.innerHTML = "";
 
-    DB.drivers.forEach((driver, index) => {
+    DB.drivers.forEach(driver => {
 
-        const row = document.createElement("tr");
+        const tr = document.createElement("tr");
 
-        row.innerHTML = `
-            <td>${driver.name}</td>
-            <td>${driver.surname}</td>
-            <td>${driver.phone}</td>
+        tr.innerHTML = `
 
-            <td>
-                <span class="status ${driver.status === "Aktivan" ? "active" : "inactive"}">
-                    ${driver.status}
-                </span>
-            </td>
+        <td>${driver.name ?? ""}</td>
 
-            <td>
+        <td>${driver.surname ?? ""}</td>
 
-                <button class="editBtn" onclick="editDriver(${index})">
-                    <i class="fa-solid fa-pen"></i>
-                </button>
+        <td>${driver.phone ?? ""}</td>
 
-                <button class="deleteBtn" onclick="deleteDriver(${index})">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+        <td>
 
-            </td>
+            <span class="status ${driver.status === "Aktivan" ? "active" : "inactive"}">
+
+                ${driver.status}
+
+            </span>
+
+        </td>
+
+        <td>
+
+            <button
+                class="editBtn"
+                data-id="${driver.id}">
+
+                <i class="fa-solid fa-pen"></i>
+
+            </button>
+
+            <button
+                class="deleteBtn"
+                data-id="${driver.id}">
+
+                <i class="fa-solid fa-trash"></i>
+
+            </button>
+
+        </td>
+
         `;
 
-        tbody.appendChild(row);
+        tbody.appendChild(tr);
+
+    });
+
+    tbody.querySelectorAll(".editBtn").forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            editDriver(btn.dataset.id);
+
+        });
+
+    });
+
+    tbody.querySelectorAll(".deleteBtn").forEach(btn => {
+
+        btn.addEventListener("click", () => {
+
+            deleteDriver(btn.dataset.id);
+
+        });
 
     });
 
 }
 
+// ===============================================
+// OTVORI MODAL
+// ===============================================
+
 function openDriverModal() {
 
-    editingDriver = -1;
+    editingDriver = null;
 
-    document.getElementById("driverName").value = "";
-    document.getElementById("driverSurname").value = "";
-    document.getElementById("driverPhone").value = "";
-    document.getElementById("driverStatus").value = "Aktivan";
+    document.getElementById("driverForm")?.reset();
 
-    openModal("driverModal");
+    document
+        .getElementById("driverModal")
+        ?.classList.add("active");
 
 }
 
+// ===============================================
+// UREDI VOZAČA
+// ===============================================
+
+function editDriver(id) {
+
+    const driver = DB.drivers.find(d => String(d.id) === String(id));
+
+    if (!driver) return;
+
+    editingDriver = driver.id;
+
+    document.getElementById("name").value =
+        driver.name || "";
+
+    document.getElementById("surname").value =
+        driver.surname || "";
+
+    document.getElementById("phone").value =
+        driver.phone || "";
+
+    document.getElementById("status").value =
+        driver.status || "Aktivan";
+
+    document
+        .getElementById("driverModal")
+        ?.classList.add("active");
+
+}
+
+// ===============================================
+// SPREMI
+// ===============================================
+
 async function saveDriver() {
 
-    const driver = {
+    const payload = {
 
-        name: document.getElementById("driverName").value.trim(),
+        name:
+            document.getElementById("name").value.trim(),
 
-        surname: document.getElementById("driverSurname").value.trim(),
+        surname:
+            document.getElementById("surname").value.trim(),
 
-        phone: document.getElementById("driverPhone").value.trim(),
+        phone:
+            document.getElementById("phone").value.trim(),
 
-        status: document.getElementById("driverStatus").value
+        status:
+            document.getElementById("status").value
 
     };
 
-    if (!driver.name) {
+    if (!payload.name) {
 
-        alert("Unesi ime.");
+        alert("Unesite ime vozača.");
 
         return;
 
     }
 
-    if (editingDriver === -1) {
+    let error;
 
-        const { error } = await supabase
+    if (editingDriver) {
+
+        ({ error } = await db
 
             .from("drivers")
 
-            .insert(driver);
+            .update(payload)
 
-        if (error) {
-
-            console.error(error);
-
-            alert(error.message);
-
-            return;
-
-        }
-
-        toast("Vozač dodan");
+            .eq("id", editingDriver));
 
     }
 
     else {
 
-        const id = DB.drivers[editingDriver].id;
-
-        const { error } = await supabase
+        ({ error } = await db
 
             .from("drivers")
 
-            .update(driver)
-
-            .eq("id", id);
-
-        if (error) {
-
-            console.error(error);
-
-            alert(error.message);
-
-            return;
-
-        }
-
-        toast("Vozač ažuriran");
+            .insert(payload));
 
     }
 
-    await loadDrivers();
+    if (error) {
 
-    renderDrivers();
+        console.error(error);
 
-    updateDashboard();
+        alert(error.message);
 
-    closeModal("driverModal");
+        return;
 
-}
- 
+    }
 
-function editDriver(index) {
+    document
+        .getElementById("driverModal")
+        ?.classList.remove("active");
 
-    editingDriver = index;
+    editingDriver = null;
 
-    const driver = DB.drivers[index];
-
-    document.getElementById("driverName").value = driver.name;
-    document.getElementById("driverSurname").value = driver.surname;
-    document.getElementById("driverPhone").value = driver.phone;
-    document.getElementById("driverStatus").value = driver.status;
-
-    openModal("driverModal");
+    await refreshApp();
 
 }
 
-async function deleteDriver(index) {
+// ===============================================
+// OBRIŠI VOZAČA
+// ===============================================
+
+async function deleteDriver(id) {
 
     if (!confirm("Obrisati vozača?")) return;
 
-    const id = DB.drivers[index].id;
-
-    const { error } = await supabase
-
+    const { error } = await db
         .from("drivers")
-
         .delete()
-
         .eq("id", id);
 
     if (error) {
@@ -211,68 +256,95 @@ async function deleteDriver(index) {
 
     }
 
+    await refreshApp();
+
+}
+
+
+
+// ===============================================
+// PRETRAGA
+// ===============================================
+
+function searchDrivers(text) {
+
+    const rows = document.querySelectorAll("#driversBody tr");
+
+    rows.forEach(row => {
+
+        row.style.display =
+            row.innerText.toLowerCase().includes(text)
+                ? ""
+                : "none";
+
+    });
+
+}
+
+
+
+// ===============================================
+// ZATVARANJE MODALA
+// ===============================================
+
+function closeModal(id) {
+
+    const modal = document.getElementById(id);
+
+    if (!modal) return;
+
+    modal.classList.remove("active");
+
+}
+
+
+
+// ===============================================
+// OTVARANJE MODALA
+// ===============================================
+
+function openModal(id) {
+
+    const modal = document.getElementById(id);
+
+    if (!modal) return;
+
+    modal.classList.add("active");
+
+}
+
+
+
+// ===============================================
+// PROFIL VOZAČA
+// ===============================================
+
+function openDriverProfile(id) {
+
+    const driver = DB.drivers.find(d => String(d.id) === String(id));
+
+    if (!driver) return;
+
+    console.log(driver);
+
+    // Ovdje ćemo kasnije otvoriti puni profil vozača
+
+}
+
+
+
+// ===============================================
+// REFRESH
+// ===============================================
+
+async function reloadDrivers() {
+
     await loadDrivers();
 
     renderDrivers();
 
-    updateDashboard();
-
-    toast("Vozač obrisan");
-
 }
 
-function searchDrivers(text) {
 
-    const tbody = document.getElementById("driversBody");
 
-    if (!tbody) return;
-
-    tbody.innerHTML = "";
-
-    DB.drivers
-        .filter(driver => {
-
-            const value = (
-                driver.name +
-                " " +
-                driver.surname +
-                " " +
-                driver.phone
-            ).toLowerCase();
-
-            return value.includes(text.toLowerCase());
-
-        })
-        .forEach((driver, index) => {
-
-            const row = document.createElement("tr");
-
-            row.innerHTML = `
-                <td>${driver.name}</td>
-                <td>${driver.surname}</td>
-                <td>${driver.phone}</td>
-
-                <td>
-                    <span class="status ${driver.status === "Aktivan" ? "active" : "inactive"}">
-                        ${driver.status}
-                    </span>
-                </td>
-
-                <td>
-
-                    <button class="editBtn" onclick="editDriver(${index})">
-                        <i class="fa-solid fa-pen"></i>
-                    </button>
-
-                    <button class="deleteBtn" onclick="deleteDriver(${index})">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
-
-                </td>
-            `;
-
-            tbody.appendChild(row);
-
-        });
-
-}
+console.log("✅ drivers.js učitan");
