@@ -574,46 +574,39 @@ MODAL - VOZAČ
 
 <div id="driverModal" class="modal">
 
-    <div class="modalBox">
+    <div class="modalBox driverModal">
 
         <h2>Novi vozač</h2>
 
-        <label>Ime</label>
-        <input id="driverName" type="text">
-
-        <label>Prezime</label>
-        <input id="driverSurname" type="text">
-
-        <label>Telefon</label>
-        <input id="driverPhone" type="text">
-
-        <label>Status</label>
-
-        <select id="driverStatus">
-
-            <option value="Aktivan">Aktivan</option>
-            <option value="Neaktivan">Neaktivan</option>
-
-        </select>
+        <div class="formGrid">
+            <div><label>Ime</label><input id="driverName" type="text"></div>
+            <div><label>Prezime</label><input id="driverSurname" type="text"></div>
+            <div><label>OIB</label><input id="driverOib" type="text"></div>
+            <div><label>Datum rođenja</label><input id="driverBirthDate" type="date"></div>
+            <div><label>Telefon</label><input id="driverPhone" type="text"></div>
+            <div><label>Email</label><input id="driverEmail" type="email"></div>
+            <div><label>Grad</label><input id="driverCity" type="text"></div>
+            <div>
+                <label>Vozilo</label>
+                <select id="driverVehicle">
+                    <option value="">Odaberi vozilo...</option>
+                </select>
+            </div>
+            <div><label>Broj taxi kartice</label><input id="driverTaxiCard" type="text"></div>
+            <div><label>Datum zaposlenja</label><input id="driverEmployment" type="date"></div>
+            <div><label>Radni sati</label><input id="driverHours" type="number"></div>
+            <div>
+                <label>Status</label>
+                <select id="driverStatus">
+                    <option value="Aktivan">Aktivan</option>
+                    <option value="Neaktivan">Neaktivan</option>
+                </select>
+            </div>
+        </div>
 
         <div class="buttons">
-
-            <button
-                id="saveDriver"
-                class="primaryBtn">
-
-                Spremi
-
-            </button>
-
-            <button
-                id="closeDriver"
-                class="secondaryBtn">
-
-                Odustani
-
-            </button>
-
+            <button id="saveDriver" class="primaryBtn">Spremi</button>
+            <button id="closeDriver" class="secondaryBtn">Odustani</button>
         </div>
 
     </div>
