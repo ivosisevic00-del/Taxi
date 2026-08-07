@@ -1,15 +1,13 @@
 // ===============================================
 // ZDRAVI RAZUM ERP
-// Supabase
+// supabase.js
 // ===============================================
 
-const SUPABASE_URL =
-"https://mwwlsoqdsowvimvdtpyp.supabase.co";
+const SUPABASE_URL = "https://mwwlsoqdsowvimvdtpyp.supabase.co";
 
-const SUPABASE_KEY =
-sb_publishable_WD0YaRZFdNSOWPpC9gaDVA_3srfc00g;
+const SUPABASE_KEY = "sb_publishable_WD0YaRZFdNSOWPpC9gaDVA_3srfc00g";
 
-const db = window.supabase.createClient(
+window.db = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
