@@ -3,20 +3,20 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ZdraviRazum ERP</title>
+    <title>Zdravi Razum ERP</title>
 
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -24,253 +24,313 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 
 <div class="app">
 
-<!-- =====================================
-     SIDEBAR
-====================================== -->
+    <!-- SIDEBAR -->
 
-<aside class="sidebar">
+    <aside class="sidebar">
 
-    <div class="logo">
+        <div class="logo">
 
-        <i class="fa-solid fa-truck-fast"></i>
+            <i class="fa-solid fa-truck-fast"></i>
 
-        <span>Zdravi Razum</span>
+            <span>Zdravi Razum</span>
 
-    </div>
+        </div>
 
-    <nav class="menu">
+        <nav class="menu">
 
-        <button class="menu-item active">
-            <i class="fa-solid fa-chart-column"></i>
-            <span>Dashboard</span>
-        </button>
+            <button class="menu-item active" data-page="dashboard">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Dashboard</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-users"></i>
-            <span>Vozači</span>
-        </button>
+            <button class="menu-item" data-page="drivers">
+                <i class="fa-solid fa-users"></i>
+                <span>Vozači</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-car"></i>
-            <span>Vozila</span>
-        </button>
+            <button class="menu-item" data-page="vehicles">
+                <i class="fa-solid fa-car"></i>
+                <span>Vozila</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-wallet"></i>
-            <span>Financije</span>
-        </button>
+            <button class="menu-item" data-page="finance">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Financije</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-screwdriver-wrench"></i>
-            <span>Servisi</span>
-        </button>
+            <button class="menu-item" data-page="services">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Servisi</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-folder-open"></i>
-            <span>Dokumenti</span>
-        </button>
+            <button class="menu-item" data-page="documents">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Dokumenti</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-chart-line"></i>
-            <span>Izvještaji</span>
-        </button>
+            <button class="menu-item" data-page="reports">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Izvještaji</span>
+            </button>
 
-        <button class="menu-item">
-            <i class="fa-solid fa-gear"></i>
-            <span>Postavke</span>
-        </button>
+            <button class="menu-item" data-page="settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>Postavke</span>
+            </button>
 
-    </nav>
+        </nav>
 
-</aside>
+    </aside>
 
-<!-- =====================================
-     SADRŽAJ
-====================================== -->
+    <!-- CONTENT -->
 
-<main class="content">
+    <main class="content">
 
-<header class="topbar">
+        <header class="topbar">
 
-    <button id="menuToggle" class="menuToggle">
+            <button id="menuToggle" class="menuToggle">
+                <i class="fa-solid fa-bars"></i>
+            </button>
 
-        <i class="fa-solid fa-bars"></i>
+            <div class="search">
 
-    </button>
+                <i class="fa-solid fa-magnifying-glass"></i>
 
-    <div class="search">
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-        <input
-            id="searchInput"
-            type="text"
-            placeholder="Pretraži vozače, vozila, registracije...">
-
-    </div>
-
-    <div class="topbar-right">
-
-        <button class="icon-btn">
-            <i class="fa-solid fa-bell"></i>
-        </button>
-
-        <button class="icon-btn">
-            <i class="fa-solid fa-envelope"></i>
-        </button>
-
-        <div class="profile">
-
-            <img src="https://i.pravatar.cc/100?img=12">
-
-            <div>
-
-                <strong>Administrator</strong>
-
-                <small>Fleet Manager</small>
+                <input
+                    id="searchInput"
+                    type="text"
+                    placeholder="Pretraži...">
 
             </div>
+
+            <div class="topbar-right">
+
+                <button class="icon-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="icon-btn">
+                    <i class="fa-solid fa-envelope"></i>
+                </button>
+
+                <div class="profile">
+
+                    <img src="https://i.pravatar.cc/100?img=12" alt="Profil">
+
+                    <div>
+
+                        <strong>Administrator</strong>
+
+                        <small>Zdravi Razum ERP</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+<!-- =====================================
+DASHBOARD
+===================================== -->
+
+<section id="dashboardModule" class="page">
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h3>Vozači</h3>
+
+            <h2 id="driversCount">0</h2>
+
+            <p>Aktivni vozači</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Vozila</h3>
+
+            <h2 id="vehiclesCount">0</h2>
+
+            <p>Ukupno vozila</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Prihod</h3>
+
+            <h2 id="incomeTotal">0 €</h2>
+
+            <p>Ukupni prihod</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Trošak</h3>
+
+            <h2 id="expenseTotal">0 €</h2>
+
+            <p>Ukupni trošak</p>
 
         </div>
 
     </div>
 
-</header>
+    <div class="section">
 
-<!-- =====================================
-     KPI
-====================================== -->
+        <div class="sectionHeader">
 
-<section class="cards">
+            <h2>
 
-<div class="card">
-<span>Vozači</span>
-<h2 id="driversCount">0</h2>
-</div>
+                <i class="fa-solid fa-bolt"></i>
 
-<div class="card">
-<span>Vozila</span>
-<h2 id="vehiclesCount">0</h2>
-</div>
+                Brze akcije
 
-<div class="card">
-<span>Zarada</span>
-<h2 id="incomeTotal">0 €</h2>
-</div>
+            </h2>
 
-<div class="card">
-<span>Troškovi</span>
-<h2 id="expenseTotal">0 €</h2>
-</div>
+        </div>
 
-</section>
+        <div class="quickActions">
 
-<!-- =====================================
-DASHBOARD
-====================================== -->
+            <button id="quickDriver" class="quickCard">
 
-<section class="dashboard">
+                <i class="fa-solid fa-user-plus"></i>
 
-<div class="panel">
+                <h4>Novi vozač</h4>
 
-<h2>Posljednje aktivnosti</h2>
+                <p>Dodaj novog vozača</p>
 
-<ul id="activityList">
+            </button>
 
-<li>Dobrodošao u Zdravi Razum ERP.</li>
+            <button id="quickVehicle" class="quickCard">
 
-</ul>
+                <i class="fa-solid fa-car"></i>
 
-</div>
+                <h4>Novo vozilo</h4>
 
-<div class="panel">
+                <p>Dodaj vozilo</p>
 
-<h2>Brze akcije</h2>
+            </button>
 
-<div class="quickActions">
+            <button id="quickFinance" class="quickCard">
 
-<button id="quickDriver" class="primaryBtn">
-<i class="fa-solid fa-user-plus"></i>
-Novi vozač
-</button>
+                <i class="fa-solid fa-wallet"></i>
 
-<button id="quickVehicle" class="primaryBtn">
-<i class="fa-solid fa-car"></i>
-Novo vozilo
-</button>
+                <h4>Nova financija</h4>
 
-<button id="quickFinance" class="primaryBtn">
-<i class="fa-solid fa-wallet"></i>
-Nova financija
-</button>
+                <p>Dodaj prihod ili trošak</p>
 
-<button id="quickService" class="primaryBtn">
-<i class="fa-solid fa-screwdriver-wrench"></i>
-Novi servis
-</button>
+            </button>
 
-</div>
+            <button id="quickService" class="quickCard">
 
-</div>
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                <h4>Novi servis</h4>
+
+                <p>Evidentiraj servis</p>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="section">
+
+        <div class="sectionHeader">
+
+            <h2>
+
+                <i class="fa-solid fa-clock-rotate-left"></i>
+
+                Zadnje aktivnosti
+
+            </h2>
+
+        </div>
+
+        <ul id="activityList">
+
+            <li>Dobrodošao u Zdravi Razum ERP.</li>
+
+        </ul>
+
+    </div>
 
 </section>
 
 <!-- =====================================
 VOZAČI
-====================================== -->
+===================================== -->
 
-<section id="driversModule" style="display:none;">
+<section
+    id="driversModule"
+    class="page"
+    style="display:none;">
 
-<div class="sectionHeader">
+    <div class="sectionHeader">
 
-<h2>
+        <h2>
 
-<i class="fa-solid fa-users"></i>
+            <i class="fa-solid fa-users"></i>
 
-Vozači
+            Vozači
 
-</h2>
+        </h2>
 
-<button
-id="newDriverBtn"
-class="primaryBtn">
+        <button
+            id="newDriverBtn"
+            class="primaryBtn">
 
-<i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-plus"></i>
 
-Novi vozač
+            Novi vozač
 
-</button>
+        </button>
 
-</div>
+    </div>
 
-<table class="driversTable">
+    <div class="tableWrapper">
 
-<thead>
+        <table class="driversTable">
 
-<tr>
+            <thead>
 
-<th>Ime</th>
-<th>Prezime</th>
-<th>Telefon</th>
-<th>Status</th>
-<th>Akcije</th>
+                <tr>
 
-</tr>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Telefon</th>
+                    <th>Status</th>
+                    <th>Akcije</th>
 
-</thead>
+                </tr>
 
-<tbody id="driversBody">
+            </thead>
 
-</tbody>
+            <tbody id="driversBody">
 
-</table>
+            </tbody>
+
+        </table>
+
+    </div>
 
 </section>
 
 <!-- =====================================
 VOZILA
-====================================== -->
+===================================== -->
 
-<section id="vehiclesModule" style="display:none;">
+<section
+    id="vehiclesModule"
+    class="page"
+    style="display:none;">
 
     <div class="sectionHeader">
 
@@ -294,35 +354,42 @@ VOZILA
 
     </div>
 
-    <table class="driversTable">
+    <div class="tableWrapper">
 
-        <thead>
+        <table class="driversTable">
 
-            <tr>
+            <thead>
 
-                <th>Marka</th>
-                <th>Model</th>
-                <th>Godina</th>
-                <th>Registracija</th>
-                <th>Akcije</th>
+                <tr>
 
-            </tr>
+                    <th>Marka</th>
+                    <th>Model</th>
+                    <th>Godina</th>
+                    <th>Registracija</th>
+                    <th>Akcije</th>
 
-        </thead>
+                </tr>
 
-        <tbody id="vehiclesBody">
+            </thead>
 
-        </tbody>
+            <tbody id="vehiclesBody">
 
-    </table>
+            </tbody>
+
+        </table>
+
+    </div>
 
 </section>
 
 <!-- =====================================
 FINANCIJE
-====================================== -->
+===================================== -->
 
-<section id="financeModule" style="display:none;">
+<section
+    id="financeModule"
+    class="page"
+    style="display:none;">
 
     <div class="sectionHeader">
 
@@ -346,36 +413,43 @@ FINANCIJE
 
     </div>
 
-    <table class="driversTable">
+    <div class="tableWrapper">
 
-        <thead>
+        <table class="driversTable">
 
-            <tr>
+            <thead>
 
-                <th>Vozač</th>
-                <th>Platforma</th>
-                <th>Prihod</th>
-                <th>Trošak</th>
-                <th>Profit</th>
-                <th>Akcije</th>
+                <tr>
 
-            </tr>
+                    <th>Vozač</th>
+                    <th>Platforma</th>
+                    <th>Prihod</th>
+                    <th>Trošak</th>
+                    <th>Profit</th>
+                    <th>Akcije</th>
 
-        </thead>
+                </tr>
 
-        <tbody id="financeBody">
+            </thead>
 
-        </tbody>
+            <tbody id="financeBody">
 
-    </table>
+            </tbody>
+
+        </table>
+
+    </div>
 
 </section>
 
 <!-- =====================================
 SERVISI
-====================================== -->
+===================================== -->
 
-<section id="serviceModule" style="display:none;">
+<section
+    id="servicesModule"
+    class="page"
+    style="display:none;">
 
     <div class="sectionHeader">
 
@@ -387,11 +461,21 @@ SERVISI
 
         </h2>
 
+        <button
+            id="newServiceBtn"
+            class="primaryBtn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Novi servis
+
+        </button>
+
     </div>
 
-    <div class="panel">
+    <div class="section">
 
-        <p>Nema evidentiranih servisa.</p>
+        <p>Modul servisa bit će dodan u sljedećoj fazi.</p>
 
     </div>
 
@@ -399,9 +483,12 @@ SERVISI
 
 <!-- =====================================
 DOKUMENTI
-====================================== -->
+===================================== -->
 
-<section id="documentsModule" style="display:none;">
+<section
+    id="documentsModule"
+    class="page"
+    style="display:none;">
 
     <div class="sectionHeader">
 
@@ -415,7 +502,7 @@ DOKUMENTI
 
     </div>
 
-    <div class="panel">
+    <div class="section">
 
         <p>Nema učitanih dokumenata.</p>
 
@@ -424,8 +511,66 @@ DOKUMENTI
 </section>
 
 <!-- =====================================
+IZVJEŠTAJI
+===================================== -->
+
+<section
+    id="reportsModule"
+    class="page"
+    style="display:none;">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            Izvještaji
+
+        </h2>
+
+    </div>
+
+    <div class="section">
+
+        <p>Grafovi i izvještaji bit će dostupni u verziji 2.1.</p>
+
+    </div>
+
+</section>
+
+<!-- =====================================
+POSTAVKE
+===================================== -->
+
+<section
+    id="settingsModule"
+    class="page"
+    style="display:none;">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            <i class="fa-solid fa-gear"></i>
+
+            Postavke
+
+        </h2>
+
+    </div>
+
+    <div class="section">
+
+        <p>Postavke aplikacije.</p>
+
+    </div>
+
+</section>
+
+<!-- =====================================
 MODAL - VOZAČ
-====================================== -->
+===================================== -->
 
 <div id="driverModal" class="modal">
 
@@ -433,25 +578,21 @@ MODAL - VOZAČ
 
         <h2>Novi vozač</h2>
 
-        <input
-            id="driverName"
-            type="text"
-            placeholder="Ime">
+        <label>Ime</label>
+        <input id="driverName" type="text">
 
-        <input
-            id="driverSurname"
-            type="text"
-            placeholder="Prezime">
+        <label>Prezime</label>
+        <input id="driverSurname" type="text">
 
-        <input
-            id="driverPhone"
-            type="text"
-            placeholder="Telefon">
+        <label>Telefon</label>
+        <input id="driverPhone" type="text">
+
+        <label>Status</label>
 
         <select id="driverStatus">
 
-            <option>Aktivan</option>
-            <option>Neaktivan</option>
+            <option value="Aktivan">Aktivan</option>
+            <option value="Neaktivan">Neaktivan</option>
 
         </select>
 
@@ -481,7 +622,7 @@ MODAL - VOZAČ
 
 <!-- =====================================
 MODAL - VOZILO
-====================================== -->
+===================================== -->
 
 <div id="vehicleModal" class="modal">
 
@@ -489,25 +630,17 @@ MODAL - VOZILO
 
         <h2>Novo vozilo</h2>
 
-        <input
-            id="vehicleBrand"
-            type="text"
-            placeholder="Marka">
+        <label>Marka</label>
+        <input id="vehicleBrand" type="text">
 
-        <input
-            id="vehicleModel"
-            type="text"
-            placeholder="Model">
+        <label>Model</label>
+        <input id="vehicleModel" type="text">
 
-        <input
-            id="vehicleYear"
-            type="number"
-            placeholder="Godina">
+        <label>Godina</label>
+        <input id="vehicleYear" type="number">
 
-        <input
-            id="vehiclePlate"
-            type="text"
-            placeholder="Registracija">
+        <label>Registracija</label>
+        <input id="vehiclePlate" type="text">
 
         <div class="buttons">
 
@@ -535,44 +668,50 @@ MODAL - VOZILO
 
 <!-- =====================================
 MODAL - FINANCIJE
-====================================== -->
+===================================== -->
 
 <div id="financeModal" class="modal">
 
     <div class="modalBox">
 
-        <h2>Novi financijski zapis</h2>
+        <h2>Financijski zapis</h2>
+
+        <label>Vozač</label>
 
         <select id="financeDriver">
 
-            <option value="">Odaberi vozača...</option>
+            <option value="">
+                Odaberi vozača...
+            </option>
 
         </select>
+
+        <label>Platforma</label>
 
         <select id="financePlatform">
 
             <option>Uber</option>
             <option>Bolt</option>
+            <option>Taxi</option>
             <option>Wolt</option>
             <option>Glovo</option>
             <option>Connecto</option>
-            <option>Smart Lift</option>
-            <option>VT Driver</option>
             <option>Daytrip</option>
-            <option>Taxi</option>
             <option>Gotovina</option>
 
         </select>
 
+        <label>Prihod (€)</label>
+
         <input
             id="financeIncome"
-            type="number"
-            placeholder="Prihod (€)">
+            type="number">
+
+        <label>Trošak (€)</label>
 
         <input
             id="financeExpense"
-            type="number"
-            placeholder="Trošak (€)">
+            type="number">
 
         <div class="buttons">
 
@@ -598,41 +737,21 @@ MODAL - FINANCIJE
 
 </div>
 
-<!-- =====================================
-FOOTER
-====================================== -->
+<div id="toast" class="toast"></div>
 
-<footer class="footer">
-
-    <span>
-
-        Zdravi Razum ERP v1.0 © 2026
-
-    </span>
-
-</footer>
+<script src="js/storage.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/drivers.js"></script>
+<script src="js/vehicles.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/app.js"></script>
 
 </main>
 
 </div>
 
-<!-- =====================================
-TOAST
-====================================== -->
-
-<div id="toast" class="toast"></div>
-
-<!-- =====================================
-JAVASCRIPT
-====================================== -->
-
-<script src="js/storage.js"></script>
-<script src="js/dashboard.js"></script>
-<script src="js/drivers.js"></script>
-<script src="js/vehicles.js"></script>
-<script src="js/finance.js"></script>
-<script src="js/ui.js"></script>
-<script src="js/app.js"></script>
 </body>
 
 </html>
+

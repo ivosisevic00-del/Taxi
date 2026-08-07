@@ -1,207 +1,108 @@
-// =======================================
-// Zdravi Razum ERP
+// ===============================================
+// ZDRAVI RAZUM ERP
 // app.js
-// =======================================
+// ===============================================
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", initApp);
 
-    // Učitaj podatke
+function initApp() {
+
     initStorage();
 
-    // Pokreni module
-    if (typeof initDashboard === "function") initDashboard();
-    if (typeof initDrivers === "function") initDrivers();
-    if (typeof initVehicles === "function") initVehicles();
-    if (typeof initFinance === "function") initFinance();
+    if (typeof initDashboard === "function") {
+        initDashboard();
+    }
 
-    // Pokreni aplikaciju
+    if (typeof initDrivers === "function") {
+        initDrivers();
+    }
+
+    if (typeof initVehicles === "function") {
+        initVehicles();
+    }
+
+    if (typeof initFinance === "function") {
+        initFinance();
+    }
+
     initNavigation();
+
     initQuickActions();
+
     initSearch();
+
     initMobileMenu();
-    initModalEvents();
 
-});
+}
 
-// =======================================
-// NAVIGACIJA
-// =======================================
+// ===============================================
+// ZDRAVI RAZUM ERP
+// app.js
+// ===============================================
 
-function initNavigation() {
+document.addEventListener("DOMContentLoaded", initApp);
 
-    const buttons = document.querySelectorAll(".menu-item");
+function initApp() {
 
-    buttons.forEach(button => {
+    initStorage();
 
-        button.addEventListener("click", () => {
+    if (typeof initDashboard === "function") {
+        initDashboard();
+    }
 
-            buttons.forEach(b => b.classList.remove("active"));
+    if (typeof initDrivers === "function") {
+        initDrivers();
+    }
 
-            button.classList.add("active");
+    if (typeof initVehicles === "function") {
+        initVehicles();
+    }
 
-            const page = button.textContent.trim();
+    if (typeof initFinance === "function") {
+        initFinance();
+    }
 
-            showModule(page);
+    initNavigation();
 
-            // Zatvori menu na mobitelu
-            if (window.innerWidth <= 900) {
+    initQuickActions();
 
-                const sidebar = document.querySelector(".sidebar");
+    initSearch();
 
-                if (sidebar) {
-                    sidebar.classList.remove("active");
-                }
+    initMobileMenu();
 
-            }
+}
+
+function showPage(page) {
+
+    document
+        .querySelectorAll(".page")
+        .forEach(section => {
+
+            section.style.display = "none";
 
         });
 
-    });
+    const module = document.getElementById(page + "Module");
 
-    showModule("Dashboard");
+    if (module) {
 
-}
+        module.style.display = "block";
 
-// =======================================
-// PRIKAZ MODULA
-// =======================================
-
-function showModule(page) {
-
-    // Sakrij dashboard
-    const dashboard = document.querySelector(".dashboard");
-
-    if (dashboard) {
-        dashboard.style.display = "none";
     }
 
-    // Sakrij sve module
-    const modules = [
+    if (window.innerWidth < 768) {
 
-        "driversModule",
-        "vehiclesModule",
-        "financeModule",
-        "serviceModule",
-        "documentsModule"
-
-    ];
-
-    modules.forEach(id => {
-
-        const module = document.getElementById(id);
-
-        if (module) {
-            module.style.display = "none";
-        }
-
-    });
-
-    // Prikaži odabrani modul
-    switch (page) {
-
-        case "Dashboard":
-
-            if (dashboard) {
-                dashboard.style.display = "grid";
-            }
-
-            break;
-
-        case "Vozači":
-
-            document.getElementById("driversModule")?.style.setProperty("display", "block");
-
-            break;
-
-        case "Vozila":
-
-            document.getElementById("vehiclesModule")?.style.setProperty("display", "block");
-
-            break;
-
-        case "Financije":
-
-            document.getElementById("financeModule")?.style.setProperty("display", "block");
-
-            break;
-
-        case "Servisi":
-
-            document.getElementById("serviceModule")?.style.setProperty("display", "block");
-
-            break;
-
-        case "Dokumenti":
-
-            document.getElementById("documentsModule")?.style.setProperty("display", "block");
-
-            break;
-
-        default:
-
-            if (dashboard) {
-                dashboard.style.display = "grid";
-            }
+        document
+            .querySelector(".sidebar")
+            .classList.remove("active");
 
     }
 
 }
 
-// =======================================
-// BRZE AKCIJE
-// =======================================
-
-function initQuickActions() {
-
-    const quickDriver = document.getElementById("quickDriver");
-
-    if (quickDriver) {
-        quickDriver.onclick = () => openDriverModal();
-    }
-
-    const quickVehicle = document.getElementById("quickVehicle");
-
-    if (quickVehicle) {
-        quickVehicle.onclick = () => openVehicleModal();
-    }
-
-    const quickFinance = document.getElementById("quickFinance");
-
-    if (quickFinance) {
-        quickFinance.onclick = () => openFinanceModal();
-    }
-
-}
-
-// =======================================
-// PRETRAGA
-// =======================================
-
-function initSearch() {
-
-    const input = document.getElementById("searchInput");
-
-    if (!input) return;
-
-    input.addEventListener("input", function () {
-
-        const value = this.value.toLowerCase();
-
-        if (typeof searchDrivers === "function") {
-            searchDrivers(value);
-        }
-
-        if (typeof searchVehicles === "function") {
-            searchVehicles(value);
-        }
-
-    });
-
-}
-
-// =======================================
+// ===============================================
 // MOBILE MENU
-// =======================================
+// ===============================================
 
 function initMobileMenu() {
 
@@ -213,101 +114,142 @@ function initMobileMenu() {
 
     button.addEventListener("click", () => {
 
-sidebar.classList.toggle("active");
+        sidebar.classList.toggle("active");
 
-document.body.classList.toggle("menu-open");
     });
 
 }
 
-// =======================================
-// MODALI
-// =======================================
+// ===============================================
+// BRZE AKCIJE
+// ===============================================
 
-function openModal(id) {
+function initQuickActions() {
 
-    const modal = document.getElementById(id);
+    document
+        .getElementById("quickDriver")
+        ?.addEventListener("click", openDriverModal);
 
-    if (modal) {
-        modal.classList.add("active");
-    }
+    document
+        .getElementById("quickVehicle")
+        ?.addEventListener("click", openVehicleModal);
+
+    document
+        .getElementById("quickFinance")
+        ?.addEventListener("click", openFinanceModal);
+
+    document
+        .getElementById("newDriverBtn")
+        ?.addEventListener("click", openDriverModal);
+
+    document
+        .getElementById("newVehicleBtn")
+        ?.addEventListener("click", openVehicleModal);
+
+    document
+        .getElementById("newFinanceBtn")
+        ?.addEventListener("click", openFinanceModal);
 
 }
 
-function closeModal(id) {
 
-    const modal = document.getElementById(id);
+// ===============================================
+// PRETRAGA
+// ===============================================
 
-    if (modal) {
-        modal.classList.remove("active");
-    }
+function initSearch() {
+
+    const input = document.getElementById("searchInput");
+
+    if (!input) return;
+
+    input.addEventListener("input", () => {
+
+        const text = input.value.toLowerCase();
+
+        if (typeof searchDrivers === "function") {
+
+            searchDrivers(text);
+
+        }
+
+        if (typeof searchVehicles === "function") {
+
+            searchVehicles(text);
+
+        }
+
+    });
 
 }
 
-// =======================================
-// MODAL DOGAĐAJI
-// =======================================
 
-function initModalEvents() {
+// ===============================================
+// ZATVARANJE MENIJA KLIKOM IZVAN
+// ===============================================
 
-    // Driver
-    const closeDriver = document.getElementById("closeDriver");
+document.addEventListener("click", (e) => {
 
-    if (closeDriver) {
-        closeDriver.onclick = () => closeModal("driverModal");
+    const sidebar = document.querySelector(".sidebar");
+
+    const toggle = document.getElementById("menuToggle");
+
+    if (!sidebar || !toggle) return;
+
+    if (window.innerWidth > 768) return;
+
+    if (
+        !sidebar.contains(e.target) &&
+        !toggle.contains(e.target)
+    ) {
+
+        sidebar.classList.remove("active");
+
     }
 
-    // Vehicle
-    const closeVehicle = document.getElementById("closeVehicle");
+});
 
-    if (closeVehicle) {
-        closeVehicle.onclick = () => closeModal("vehicleModal");
-    }
 
-    // Finance
-    const closeFinance = document.getElementById("closeFinance");
+// ===============================================
+// ESC ZATVARA MODALE
+// ===============================================
 
-    if (closeFinance) {
-        closeFinance.onclick = () => closeModal("financeModal");
-    }
+document.addEventListener("keydown", (e) => {
 
-    // Gumb "Novi zapis" u Financijama
-    const newFinance = document.getElementById("newFinanceBtn");
+    if (e.key !== "Escape") return;
 
-    if (newFinance) {
-        newFinance.onclick = () => openFinanceModal();
-    }
+    document
+        .querySelectorAll(".modal")
+        .forEach(modal => {
 
-    // Klik izvan modala zatvara modal
-    document.querySelectorAll(".modal").forEach(modal => {
+            modal.classList.remove("active");
 
-        modal.addEventListener("click", e => {
+            modal.style.display = "none";
+
+        });
+
+});
+
+
+// ===============================================
+// KLIK IZVAN MODALA
+// ===============================================
+
+document
+    .querySelectorAll(".modal")
+    .forEach(modal => {
+
+        modal.addEventListener("click", (e) => {
 
             if (e.target === modal) {
 
                 modal.classList.remove("active");
+
+                modal.style.display = "none";
 
             }
 
         });
 
     });
-
-}
-
-// =======================================
-// ESC zatvara sve modale
-// =======================================
-
-document.addEventListener("keydown", e => {
-
-    if (e.key !== "Escape") return;
-
-    document.querySelectorAll(".modal").forEach(modal => {
-
-        modal.classList.remove("active");
-
-    });
-
-});
 
