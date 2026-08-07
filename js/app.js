@@ -1,5 +1,5 @@
 // =======================================
-// FleetCore ERP
+// Zdravi Razum ERP
 // app.js
 // =======================================
 
@@ -7,15 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     initStorage();
 
-    initDashboard();
+    if (typeof initDashboard === "function")
+        initDashboard();
 
-    initDrivers();
+    if (typeof initDrivers === "function")
+        initDrivers();
 
-    initVehicles();
+    if (typeof initVehicles === "function")
+        initVehicles();
 
-    initFinance();
+    if (typeof initFinance === "function")
+        initFinance();
 
     initNavigation();
+
+    initQuickActions();
+
+    initSearch();
+
+    initModalButtons();
 
 });
 
@@ -35,7 +45,7 @@ function initNavigation() {
 
             button.classList.add("active");
 
-            const page = button.innerText.trim();
+            const page = button.textContent.trim();
 
             showModule(page);
 
@@ -47,20 +57,26 @@ function initNavigation() {
 
 }
 
+// =======================================
+// PRIKAZ MODULA
+// =======================================
+
 function showModule(page) {
 
+    // Sakrij Dashboard
+    const dashboard = document.querySelector(".dashboard");
+
+    if (dashboard) {
+        dashboard.style.display = "none";
+    }
+
+    // Sakrij sve module
     const modules = [
-
         "driversModule",
-
         "vehiclesModule",
-
         "financeModule",
-
         "serviceModule",
-
         "documentsModule"
-
     ];
 
     modules.forEach(id => {
@@ -68,223 +84,78 @@ function showModule(page) {
         const el = document.getElementById(id);
 
         if (el) {
-
             el.style.display = "none";
-
         }
 
     });
 
-    document.querySelector(".dashboard").style.display = "none";
-
+    // Prikaži odabrani modul
     switch (page) {
 
         case "Dashboard":
 
-            document.querySelector(".dashboard").style.display = "grid";
+            if (dashboard) {
+                dashboard.style.display = "grid";
+            }
 
             break;
 
-        case "Vozači":
+        case "Vozači": {
 
-            document.getElementById("driversModule").style.display = "block";
+            const el = document.getElementById("driversModule");
 
-            break;
-
-        case "Vozila":
-
-            document.getElementById("vehiclesModule").style.display = "block";
+            if (el) {
+                el.style.display = "block";
+            }
 
             break;
-
-        case "Financije":
-
-            document.getElementById("financeModule").style.display = "block";
-
-            break;
-
-        case "Servisi":
-
-            document.getElementById("serviceModule").style.display = "block";
-
-            break;
-
-        case "Dokumenti":
-
-            document.getElementById("documentsModule").style.display = "block";
-
-            break;
-
-    }
-
-}
-
-// =======================================
-// BRZE AKCIJE
-// =======================================
-
-function initQuickActions() {
-
-const quickFinance = document.getElementById("quickFinance");
-
-if (quickFinance) {
-
-    quickFinance.addEventListener("click", () => {
-
-        openFinanceModal();
-
-    });
-
-}
-
-    const quickDriver = document.getElementById("quickDriver");
-    const quickVehicle = document.getElementById("quickVehicle");
-
-    if (quickDriver) {
-
-        quickDriver.addEventListener("click", () => {
-
-            openModal("driverModal");
-
-        });
-
-    }
-
-    if (quickVehicle) {
-
-        quickVehicle.addEventListener("click", () => {
-
-            openModal("vehicleModal");
-
-        });
-
-    }
-
-}
-
-const quickFinance = document.getElementById("quickFinance");
-
-if (quickFinance) {
-
-    quickFinance.addEventListener("click", () => {
-
-        openFinanceModal();
-
-    });
-
-}
-
-// =======================================
-// GLOBALNA PRETRAGA
-// =======================================
-
-function initSearch() {
-
-    const input = document.getElementById("searchInput");
-
-    if (!input) return;
-
-    input.addEventListener("input", () => {
-
-        const text = input.value.toLowerCase();
-
-        searchDrivers(text);
-
-        if (typeof searchVehicles === "function") {
-
-            searchVehicles(text);
-
         }
 
-    });
+        case "Vozila": {
 
-}
+            const el = document.getElementById("vehiclesModule");
 
-// =======================================
-// MODALI
-// =======================================
+            if (el) {
+                el.style.display = "block";
+            }
 
-function openModal(id) {
+            break;
+        }
 
-    const modal = document.getElementById(id);
+        case "Financije": {
 
-    if (modal) {
+            const el = document.getElementById("financeModule");
 
-        modal.classList.add("active");
+            if (el) {
+                el.style.display = "block";
+            }
 
-    }
+            break;
+        }
 
-}
+        case "Servisi": {
 
-function closeModal(id) {
+            const el = document.getElementById("serviceModule");
 
-    const modal = document.getElementById(id);
+            if (el) {
+                el.style.display = "block";
+            }
 
-    if (modal) {
+            break;
+        }
 
-        modal.classList.remove("active");
+        case "Dokumenti": {
 
-    }
+            const el = document.getElementById("documentsModule");
 
-}
+            if (el) {
+                el.style.display = "block";
+            }
 
-// =======================================
-// ESC ZATVARA MODALE
-// =======================================
-
-document.addEventListener("keydown", e => {
-
-    if (e.key === "Escape") {
-
-        document.querySelectorAll(".modal").forEach(modal => {
-
-            modal.classList.remove("active");
-
-        });
+            break;
+        }
 
     }
 
-});
-
-// =======================================
-// ZATVARANJE GUMBIMA
-// =======================================
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    initQuickActions();
-
-    initSearch();
-
-    const closeDriver = document.getElementById("closeDriver");
-
-    if (closeDriver) {
-
-        closeDriver.onclick = () => closeModal("driverModal");
-
-    }
-
-    const closeVehicle = document.getElementById("closeVehicle");
-
-    if (closeVehicle) {
-
-        closeVehicle.onclick = () => closeModal("vehicleModal");
-
-    }
-
-const newFinance = document.getElementById("newFinanceBtn");
-
-if (newFinance) {
-
-    newFinance.onclick = () => openFinanceModal();
-
 }
 
-const closeFinance = document.getElementById("closeFinance");
-
-if (closeFinance) {
-
-    closeFinance.onclick = () => closeModal("financeModal");
-
-}
-});
