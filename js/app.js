@@ -247,4 +247,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+const newFinance = document.getElementById("newFinanceBtn");
+
+if (newFinance) {
+
+    newFinance.onclick = () => openFinanceModal();
+
+}
+
+const closeFinance = document.getElementById("closeFinance");
+
+if (closeFinance) {
+
+    closeFinance.onclick = () => closeModal("financeModal");
+
+}
+
 });
