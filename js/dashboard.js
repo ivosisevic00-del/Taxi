@@ -108,7 +108,7 @@ function setMoney(id, value) {
 
 function addActivity(text) {
 
-    const list = document.getElementById("activity");
+const list = document.getElementById("activityList");
 
     if (!list) return;
 
