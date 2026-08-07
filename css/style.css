@@ -1358,3 +1358,112 @@ footer{
     }
 
 }
+
+/*========================================
+MENU BUTTON
+========================================*/
+
+.menuToggle{
+
+    display:none;
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+}
+
+/*========================================
+MOBILE
+========================================*/
+
+@media(max-width:900px){
+
+.sidebar{
+
+    position:fixed;
+
+    left:-280px;
+
+    top:0;
+
+    width:260px;
+
+    height:100vh;
+
+    z-index:999;
+
+    transition:.3s;
+
+}
+
+.sidebar.active{
+
+    left:0;
+
+}
+
+.menuToggle{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.content{
+
+    margin-left:0;
+
+    width:100%;
+
+}
+
+.topbar{
+
+    gap:15px;
+
+}
+
+.cards{
+
+    grid-template-columns:1fr;
+
+}
+
+.dashboard{
+
+    grid-template-columns:1fr;
+
+}
+
+.quickActions{
+
+    grid-template-columns:1fr;
+
+}
+
+.driversTable{
+
+    display:block;
+
+    overflow-x:auto;
+
+}
+
+}
+
