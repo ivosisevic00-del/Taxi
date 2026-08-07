@@ -1267,6 +1267,34 @@ footer{
 
 }
 
+/* ==========================================
+   BRZE AKCIJE
+========================================== */
+
+.quickActions{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+.quickActions .primaryBtn{
+
+    width:100%;
+
+    padding:10px 14px;
+
+    font-size:15px;
+
+    border-radius:10px;
+
+}
+
 @media (max-width:480px){
 
     .sidebar{

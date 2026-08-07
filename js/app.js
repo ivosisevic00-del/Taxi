@@ -125,6 +125,18 @@ function showModule(page) {
 
 function initQuickActions() {
 
+const quickFinance = document.getElementById("quickFinance");
+
+if (quickFinance) {
+
+    quickFinance.addEventListener("click", () => {
+
+        openFinanceModal();
+
+    });
+
+}
+
     const quickDriver = document.getElementById("quickDriver");
     const quickVehicle = document.getElementById("quickVehicle");
 
