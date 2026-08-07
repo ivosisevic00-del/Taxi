@@ -217,3 +217,78 @@ function initSearch() {
 
 }
 
+// =======================================
+// MODALI
+// =======================================
+
+function openModal(id) {
+
+    const modal = document.getElementById(id);
+
+    if (modal) {
+        modal.classList.add("active");
+    }
+
+}
+
+function closeModal(id) {
+
+    const modal = document.getElementById(id);
+
+    if (modal) {
+        modal.classList.remove("active");
+    }
+
+}
+
+// =======================================
+// OTVARANJE MODALA
+// =======================================
+
+function openDriverModal() {
+
+    if (typeof editingDriver !== "undefined") {
+        editingDriver = -1;
+    }
+
+    const name = document.getElementById("driverName");
+    const surname = document.getElementById("driverSurname");
+    const phone = document.getElementById("driverPhone");
+    const status = document.getElementById("driverStatus");
+
+    if (name) name.value = "";
+    if (surname) surname.value = "";
+    if (phone) phone.value = "";
+    if (status) status.value = "Aktivan";
+
+    openModal("driverModal");
+
+}
+
+function openVehicleModal() {
+
+    if (typeof editingVehicle !== "undefined") {
+        editingVehicle = -1;
+    }
+
+    openModal("vehicleModal");
+
+}
+
+// =======================================
+// ESC ZATVARA MODALE
+// =======================================
+
+document.addEventListener("keydown", (e) => {
+
+    if (e.key !== "Escape") return;
+
+    document.querySelectorAll(".modal").forEach(modal => {
+
+        modal.classList.remove("active");
+
+    });
+
+});
+
+
