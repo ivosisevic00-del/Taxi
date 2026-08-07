@@ -376,57 +376,59 @@
 
         <section id="financeModule">
 
-            <div class="sectionHeader">
+<section id="financeModule">
 
-                <h2>
+    <div class="sectionHeader">
 
-                    <i class="fa-solid fa-wallet"></i>
+        <h2>
 
-                    Financije
+            <i class="fa-solid fa-wallet"></i>
 
-                </h2>
+            Financije
 
-            </div>
+        </h2>
 
-            <div class="cards">
+        <button
+            id="newFinanceBtn"
+            class="primaryBtn">
 
-                <div class="card">
+            <i class="fa-solid fa-plus"></i>
 
-                    <span>Ukupna zarada</span>
+            Novi zapis
 
-                    <h2 id="financeIncome">
+        </button>
 
-                        0 €
+    </div>
 
-                    </h2>
+    <table class="driversTable">
 
-                </div>
+        <thead>
 
-                <div class="card">
+            <tr>
 
-                    <span>Ukupni troškovi</span>
+                <th>Vozač</th>
 
-                    <h2 id="financeExpense">
+                <th>Platforma</th>
 
-                        0 €
+                <th>Prihod</th>
 
-                    </h2>
+                <th>Trošak</th>
 
-                </div>
+                <th>Profit</th>
 
-                <div class="card">
+                <th>Akcije</th>
 
-                    <span>Profit</span>
+            </tr>
 
-                    <h2 id="financeProfit">
+        </thead>
 
-                        0 €
+        <tbody id="financeBody">
 
-                    </h2>
+        </tbody>
 
-                </div>
+    </table>
 
-            </div>
+</section>
 
         </section>
 
@@ -629,6 +631,122 @@
         ============================ -->
 
         <div id="toast"></div>
+<!-- =====================================
+     MODAL FINANCIJE
+====================================== -->
+
+<div class="modal" id="financeModal">
+
+    <div class="modalBox">
+
+        <h2>Novi financijski zapis</h2>
+
+        <input
+            id="financeDriver"
+            type="text"
+            placeholder="Vozač">
+
+        <select id="financePlatform">
+
+            <option>Uber</option>
+            <option>Bolt</option>
+            <option>Wolt</option>
+            <option>Glovo</option>
+            <option>Connecto</option>
+            <option>Smart Lift</option>
+            <option>VT Driver</option>
+            <option>Daytrip</option>
+            <option>Taxi</option>
+            <option>Gotovina</option>
+
+        </select>
+
+        <input
+            id="financeIncome"
+            type="number"
+            placeholder="Prihod (€)">
+
+        <input
+            id="financeExpense"
+            type="number"
+            placeholder="Trošak (€)">
+
+        <div class="buttons">
+
+            <button
+                id="saveFinance"
+                class="primaryBtn">
+
+                Spremi
+
+            </button>
+
+            <button
+                id="closeFinance"
+                class="secondaryBtn">
+
+                Odustani
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =====================================
+     MODUL FINANCIJE
+====================================== -->
+
+<section id="financeModule">
+
+    <div class="sectionHeader">
+
+        <h2>
+
+            <i class="fa-solid fa-wallet"></i>
+
+            Financije
+
+        </h2>
+
+        <button
+            id="newFinanceBtn"
+            class="primaryBtn">
+
+            <i class="fa-solid fa-plus"></i>
+
+            Novi zapis
+
+        </button>
+
+    </div>
+
+    <table class="driversTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Vozač</th>
+                <th>Platforma</th>
+                <th>Prihod</th>
+                <th>Trošak</th>
+                <th>Profit</th>
+                <th>Akcije</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="financeBody">
+
+        </tbody>
+
+    </table>
+
+</section>
 
     </main>
 
