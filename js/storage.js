@@ -1,35 +1,82 @@
+// ===============================================
+// storage.js
+// SUPABASE
+// ===============================================
+
 const DB = {
-
     drivers: [],
-
     vehicles: [],
-
     finance: [],
-
+    services: [],
     activity: []
-
 };
 
-function initStorage(){
+async function initStorage() {
 
-    DB.drivers = JSON.parse(localStorage.getItem("drivers")) || [];
+    await loadDrivers();
 
-    DB.vehicles = JSON.parse(localStorage.getItem("vehicles")) || [];
+    await loadVehicles();
 
-    DB.finance = JSON.parse(localStorage.getItem("finance")) || [];
-
-    DB.activity = JSON.parse(localStorage.getItem("activity")) || [];
+    await loadFinance();
 
 }
 
-function saveStorage(){
+async function loadDrivers() {
 
-    localStorage.setItem("drivers", JSON.stringify(DB.drivers));
+    const { data, error } = await supabase
+        .from("drivers")
+        .select("*");
 
-    localStorage.setItem("vehicles", JSON.stringify(DB.vehicles));
+    if (error) {
 
-    localStorage.setItem("finance", JSON.stringify(DB.finance));
+        console.error(error);
 
-    localStorage.setItem("activity", JSON.stringify(DB.activity));
+        return;
+
+    }
+
+    DB.drivers = data;
 
 }
+
+async function loadVehicles() {
+
+    const { data, error } = await supabase
+        .from("vehicles")
+        .select("*");
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    DB.vehicles = data;
+
+}
+
+async function loadFinance() {
+
+    const { data, error } = await supabase
+        .from("finances")
+        .select("*");
+
+    if (error) {
+
+        console.error(error);
+
+        return;
+
+    }
+
+    DB.finance = data;
+
+}
+
+async function saveStorage() {
+
+    // više nije potreban
+}
+

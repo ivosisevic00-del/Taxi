@@ -1,30 +1,27 @@
 // ===============================================
-// ZDRAVI RAZUM ERP
+// ZDRAVI RAZUM ERP v2
 // app.js
 // ===============================================
 
 document.addEventListener("DOMContentLoaded", initApp);
 
-function initApp() {
+async function initApp() {
 
-    initStorage();
+    console.log("Pokrećem ERP...");
 
-    if (typeof initDashboard === "function") {
-        initDashboard();
-    }
+    // učitaj podatke iz Supabase
+    await initStorage();
 
-    if (typeof initDrivers === "function") {
-        initDrivers();
-    }
+    // inicijalizacija modula
+    if (typeof initDashboard === "function") initDashboard();
 
-    if (typeof initVehicles === "function") {
-        initVehicles();
-    }
+    if (typeof initDrivers === "function") initDrivers();
 
-    if (typeof initFinance === "function") {
-        initFinance();
-    }
+    if (typeof initVehicles === "function") initVehicles();
 
+    if (typeof initFinance === "function") initFinance();
+
+    // UI
     initNavigation();
 
     initQuickActions();
@@ -35,52 +32,45 @@ function initApp() {
 
 }
 
+
+
 // ===============================================
-// ZDRAVI RAZUM ERP
-// app.js
+// NAVIGACIJA
 // ===============================================
 
-document.addEventListener("DOMContentLoaded", initApp);
+function initNavigation() {
 
-function initApp() {
+    const buttons = document.querySelectorAll(".menu-item");
 
-    initStorage();
+    buttons.forEach(button => {
 
-    if (typeof initDashboard === "function") {
-        initDashboard();
-    }
+        button.addEventListener("click", () => {
 
-    if (typeof initDrivers === "function") {
-        initDrivers();
-    }
+            buttons.forEach(btn => btn.classList.remove("active"));
 
-    if (typeof initVehicles === "function") {
-        initVehicles();
-    }
+            button.classList.add("active");
 
-    if (typeof initFinance === "function") {
-        initFinance();
-    }
+            const page = button.dataset.page;
 
-    initNavigation();
+            showPage(page);
 
-    initQuickActions();
+        });
 
-    initSearch();
+    });
 
-    initMobileMenu();
+    showPage("dashboard");
 
 }
+
+
 
 function showPage(page) {
 
-    document
-        .querySelectorAll(".page")
-        .forEach(section => {
+    document.querySelectorAll(".page").forEach(page => {
 
-            section.style.display = "none";
+        page.style.display = "none";
 
-        });
+    });
 
     const module = document.getElementById(page + "Module");
 
@@ -90,11 +80,11 @@ function showPage(page) {
 
     }
 
-    if (window.innerWidth < 768) {
+    if (window.innerWidth <= 768) {
 
         document
             .querySelector(".sidebar")
-            .classList.remove("active");
+            ?.classList.remove("active");
 
     }
 
@@ -106,19 +96,37 @@ function showPage(page) {
 
 function initMobileMenu() {
 
-    const button = document.getElementById("menuToggle");
-
+    const menuButton = document.getElementById("menuToggle");
     const sidebar = document.querySelector(".sidebar");
 
-    if (!button || !sidebar) return;
+    if (!menuButton || !sidebar) return;
 
-    button.addEventListener("click", () => {
+    menuButton.addEventListener("click", (e) => {
+
+        e.stopPropagation();
 
         sidebar.classList.toggle("active");
 
     });
 
+    document.addEventListener("click", (e) => {
+
+        if (window.innerWidth > 768) return;
+
+        if (
+            !sidebar.contains(e.target) &&
+            !menuButton.contains(e.target)
+        ) {
+
+            sidebar.classList.remove("active");
+
+        }
+
+    });
+
 }
+
+
 
 // ===============================================
 // BRZE AKCIJE
@@ -153,6 +161,7 @@ function initQuickActions() {
 }
 
 
+
 // ===============================================
 // PRETRAGA
 // ===============================================
@@ -165,17 +174,17 @@ function initSearch() {
 
     input.addEventListener("input", () => {
 
-        const text = input.value.toLowerCase();
+        const value = input.value.toLowerCase();
 
         if (typeof searchDrivers === "function") {
 
-            searchDrivers(text);
+            searchDrivers(value);
 
         }
 
         if (typeof searchVehicles === "function") {
 
-            searchVehicles(text);
+            searchVehicles(value);
 
         }
 
@@ -183,31 +192,22 @@ function initSearch() {
 
 }
 
-
 // ===============================================
-// ZATVARANJE MENIJA KLIKOM IZVAN
+// MODALI
 // ===============================================
 
-document.addEventListener("click", (e) => {
+function closeAllModals() {
 
-    const sidebar = document.querySelector(".sidebar");
+    document.querySelectorAll(".modal").forEach(modal => {
 
-    const toggle = document.getElementById("menuToggle");
+        modal.classList.remove("active");
 
-    if (!sidebar || !toggle) return;
+        modal.style.display = "none";
 
-    if (window.innerWidth > 768) return;
+    });
 
-    if (
-        !sidebar.contains(e.target) &&
-        !toggle.contains(e.target)
-    ) {
+}
 
-        sidebar.classList.remove("active");
-
-    }
-
-});
 
 
 // ===============================================
@@ -216,40 +216,85 @@ document.addEventListener("click", (e) => {
 
 document.addEventListener("keydown", (e) => {
 
-    if (e.key !== "Escape") return;
+    if (e.key === "Escape") {
 
-    document
-        .querySelectorAll(".modal")
-        .forEach(modal => {
+        closeAllModals();
 
-            modal.classList.remove("active");
-
-            modal.style.display = "none";
-
-        });
+    }
 
 });
+
 
 
 // ===============================================
 // KLIK IZVAN MODALA
 // ===============================================
 
-document
-    .querySelectorAll(".modal")
-    .forEach(modal => {
+document.addEventListener("click", (e) => {
 
-        modal.addEventListener("click", (e) => {
+    if (!e.target.classList.contains("modal")) return;
 
-            if (e.target === modal) {
+    closeAllModals();
 
-                modal.classList.remove("active");
+});
 
-                modal.style.display = "none";
 
-            }
 
-        });
+// ===============================================
+// RESIZE
+// ===============================================
 
-    });
+window.addEventListener("resize", () => {
+
+    if (window.innerWidth > 768) {
+
+        document
+            .querySelector(".sidebar")
+            ?.classList.remove("active");
+
+    }
+
+});
+
+
+
+// ===============================================
+// DASHBOARD
+// ===============================================
+
+function refreshApp() {
+
+    if (typeof renderDrivers === "function") {
+
+        renderDrivers();
+
+    }
+
+    if (typeof renderVehicles === "function") {
+
+        renderVehicles();
+
+    }
+
+    if (typeof renderFinance === "function") {
+
+        renderFinance();
+
+    }
+
+    if (typeof updateDashboard === "function") {
+
+        updateDashboard();
+
+    }
+
+}
+
+
+
+// ===============================================
+// DEBUG
+// ===============================================
+
+console.log("✅ app.js učitan");
 

@@ -91,7 +91,7 @@ function openDriverModal() {
 
 }
 
-function saveDriver() {
+async function saveDriver() {
 
     const driver = {
 
@@ -105,7 +105,7 @@ function saveDriver() {
 
     };
 
-    if (driver.name === "") {
+    if (!driver.name) {
 
         alert("Unesi ime.");
 
@@ -115,19 +115,53 @@ function saveDriver() {
 
     if (editingDriver === -1) {
 
-        DB.drivers.push(driver);
+        const { error } = await supabase
+
+            .from("drivers")
+
+            .insert(driver);
+
+        if (error) {
+
+            console.error(error);
+
+            alert(error.message);
+
+            return;
+
+        }
 
         toast("Vozač dodan");
 
-    } else {
+    }
 
-        DB.drivers[editingDriver] = driver;
+    else {
+
+        const id = DB.drivers[editingDriver].id;
+
+        const { error } = await supabase
+
+            .from("drivers")
+
+            .update(driver)
+
+            .eq("id", id);
+
+        if (error) {
+
+            console.error(error);
+
+            alert(error.message);
+
+            return;
+
+        }
 
         toast("Vozač ažuriran");
 
     }
 
-    saveStorage();
+    await loadDrivers();
 
     renderDrivers();
 
@@ -136,6 +170,7 @@ function saveDriver() {
     closeModal("driverModal");
 
 }
+ 
 
 function editDriver(index) {
 
@@ -152,15 +187,31 @@ function editDriver(index) {
 
 }
 
-function deleteDriver(index) {
+async function deleteDriver(index) {
 
-    if (!confirm("Želite li obrisati ovog vozača?")) {
+    if (!confirm("Obrisati vozača?")) return;
+
+    const id = DB.drivers[index].id;
+
+    const { error } = await supabase
+
+        .from("drivers")
+
+        .delete()
+
+        .eq("id", id);
+
+    if (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
         return;
+
     }
 
-    DB.drivers.splice(index, 1);
-
-    saveStorage();
+    await loadDrivers();
 
     renderDrivers();
 
