@@ -118,6 +118,7 @@ function showModule(page) {
     }
 
 }
+
 // =======================================
 // BRZE AKCIJE
 // =======================================
@@ -262,5 +263,4 @@ if (closeFinance) {
     closeFinance.onclick = () => closeModal("financeModal");
 
 }
-
 });
