@@ -4,9 +4,7 @@ const DB = {
 
     vehicles: [],
 
-    earnings: [],
-
-    expenses: [],
+    finance: [],
 
     activity: []
 
@@ -18,9 +16,7 @@ function initStorage(){
 
     DB.vehicles = JSON.parse(localStorage.getItem("vehicles")) || [];
 
-    DB.earnings = JSON.parse(localStorage.getItem("earnings")) || [];
-
-    DB.expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+    DB.finance = JSON.parse(localStorage.getItem("finance")) || [];
 
     DB.activity = JSON.parse(localStorage.getItem("activity")) || [];
 
@@ -28,14 +24,12 @@ function initStorage(){
 
 function saveStorage(){
 
-    localStorage.setItem("drivers",JSON.stringify(DB.drivers));
+    localStorage.setItem("drivers", JSON.stringify(DB.drivers));
 
-    localStorage.setItem("vehicles",JSON.stringify(DB.vehicles));
+    localStorage.setItem("vehicles", JSON.stringify(DB.vehicles));
 
-    localStorage.setItem("earnings",JSON.stringify(DB.earnings));
+    localStorage.setItem("finance", JSON.stringify(DB.finance));
 
-    localStorage.setItem("expenses",JSON.stringify(DB.expenses));
-
-    localStorage.setItem("activity",JSON.stringify(DB.activity));
+    localStorage.setItem("activity", JSON.stringify(DB.activity));
 
 }
