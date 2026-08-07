@@ -11,10 +11,8 @@ function initFinance() {
 
     const saveBtn = document.getElementById("saveFinance");
 
-    if(saveBtn){
-
-        saveBtn.addEventListener("click",saveFinance);
-
+    if (saveBtn) {
+        saveBtn.addEventListener("click", saveFinance);
     }
 
 }
@@ -23,19 +21,21 @@ function initFinance() {
 // TABLICA
 // =======================================
 
-function renderFinance(){
+function renderFinance() {
 
-    const tbody=document.getElementById("financeBody");
+    const tbody = document.getElementById("financeBody");
 
-    if(!tbody) return;
+    if (!tbody) return;
 
-    tbody.innerHTML="";
-console.log("DB =", DB);
-console.log("DB.finance =", DB.finance);
+    if (!Array.isArray(DB.finance)) {
+        DB.finance = [];
+    }
 
-    DB.finance.forEach((item,index)=>{
+    tbody.innerHTML = "";
 
-        tbody.innerHTML+=`
+    DB.finance.forEach((item, index) => {
+
+        tbody.innerHTML += `
 
         <tr>
 
@@ -47,7 +47,7 @@ console.log("DB.finance =", DB.finance);
 
             <td>${Number(item.expense).toFixed(2)} €</td>
 
-            <td>${(item.income-item.expense).toFixed(2)} €</td>
+            <td>${(Number(item.income) - Number(item.expense)).toFixed(2)} €</td>
 
             <td>
 
@@ -80,16 +80,49 @@ console.log("DB.finance =", DB.finance);
 }
 
 // =======================================
+// UČITAJ VOZAČE U DROPDOWN
+// =======================================
+
+function loadFinanceDrivers() {
+
+    const select = document.getElementById("financeDriver");
+
+    if (!select) return;
+
+    select.innerHTML = `<option value="">Odaberi vozača...</option>`;
+
+    DB.drivers.forEach(driver => {
+
+        const fullName = `${driver.name} ${driver.surname}`;
+
+        const option = document.createElement("option");
+
+        option.value = fullName;
+
+        option.textContent = fullName;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+// =======================================
 // NOVI ZAPIS
 // =======================================
 
 function openFinanceModal() {
 
+    loadFinanceDrivers();
+
     editingFinance = -1;
 
     document.getElementById("financeDriver").value = "";
+
     document.getElementById("financePlatform").value = "Uber";
+
     document.getElementById("financeIncome").value = "";
+
     document.getElementById("financeExpense").value = "";
 
     openModal("financeModal");
@@ -164,6 +197,8 @@ function saveFinance() {
 
 function editFinance(index){
 
+    loadFinanceDrivers();
+
     editingFinance = index;
 
     const f = DB.finance[index];
@@ -188,10 +223,6 @@ function deleteFinance(index){
 
     if(!confirm("Obrisati zapis?")) return;
 
-    addActivity(
-        "Obrisan financijski zapis."
-    );
-
     DB.finance.splice(index,1);
 
     saveStorage();
@@ -201,6 +232,12 @@ function deleteFinance(index){
     updateDashboard();
 
     toast("Financijski zapis obrisan.");
+
+    if(typeof addActivity === "function"){
+
+        addActivity("Obrisan financijski zapis.");
+
+    }
 
 }
 
